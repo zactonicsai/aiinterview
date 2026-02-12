@@ -521,6 +521,10 @@
                 background: #fce4ec !important;
                 color: #c62828 !important;
             }
+            .cert-q-helped {
+                background: #fff8e1 !important;
+                color: #f57f17 !important;
+            }
             .cert-q-answer {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 8px;
@@ -658,6 +662,10 @@
                     <button id="start-quiz-btn" class="px-8 py-2.5 bg-ember text-chalk rounded-lg font-semibold text-sm hover:bg-ember/90 transition-all pulse-glow">
                         Start Quiz →
                     </button>
+                </div>
+                <!-- Past Attempts from localStorage -->
+                <div id="past-attempts" class="mt-6 p-4 bg-white/[0.02] border border-white/5 rounded-lg max-w-sm">
+                    <p class="font-mono text-[10px] text-chalk/30 uppercase tracking-widest mb-3">Past Attempts</p>
                 </div>
             </div>
 
@@ -1868,14 +1876,91 @@
         }
     ];
 
+    // ═══════════════════════════════════════════════════════════════
+    // LOCALSTORAGE HELPERS
+    // ═══════════════════════════════════════════════════════════════
+    const STORAGE_KEY = 'zactonics_quiz_history';
+
+    function loadQuizHistory() {
+        try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        } catch (e) { return []; }
+    }
+
+    function saveQuizResult(result) {
+        try {
+            const history = loadQuizHistory();
+            history.push(result);
+            // Keep last 50 attempts
+            if (history.length > 50) history.splice(0, history.length - 50);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+        } catch (e) { console.warn('localStorage save failed:', e); }
+    }
+
+    function renderPastAttempts() {
+        const history = loadQuizHistory();
+        const container = document.getElementById('past-attempts');
+        if (!container) return;
+
+        if (history.length === 0) {
+            container.innerHTML = '<p class="text-chalk/25 text-xs font-mono">No past attempts yet.</p>';
+            return;
+        }
+
+        const best = Math.max(...history.map(h => h.pct));
+        const avg = Math.round(history.reduce((s, h) => s + h.pct, 0) / history.length);
+        const recent = history.slice(-5).reverse();
+
+        container.innerHTML = `
+            <div class="flex gap-4 mb-3">
+                <div class="text-center">
+                    <div class="stat-number font-display text-xl">${history.length}</div>
+                    <div class="font-mono text-[8px] text-chalk/30 uppercase tracking-wider">Attempts</div>
+                </div>
+                <div class="text-center">
+                    <div class="stat-number font-display text-xl">${best}%</div>
+                    <div class="font-mono text-[8px] text-chalk/30 uppercase tracking-wider">Best</div>
+                </div>
+                <div class="text-center">
+                    <div class="stat-number font-display text-xl">${avg}%</div>
+                    <div class="font-mono text-[8px] text-chalk/30 uppercase tracking-wider">Average</div>
+                </div>
+            </div>
+            <div class="space-y-1">
+                ${recent.map(r => `
+                    <div class="flex items-center justify-between text-xs py-1 border-b border-white/5">
+                        <span class="text-chalk/40 font-mono">${new Date(r.date).toLocaleDateString()}</span>
+                        <span class="text-chalk/50">${r.correct}/${r.total}</span>
+                        <span class="font-mono font-bold ${r.pct >= 70 ? 'text-sage' : r.pct >= 50 ? 'text-gold' : 'text-ember'}">${r.pct}%</span>
+                    </div>
+                `).join('')}
+            </div>
+            <button id="clear-history-btn" class="mt-3 text-[10px] font-mono text-chalk/20 hover:text-ember/60 transition-colors uppercase tracking-wider">
+                Clear History
+            </button>
+        `;
+
+        const clearBtn = document.getElementById('clear-history-btn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                if (confirm('Clear all quiz history?')) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    renderPastAttempts();
+                }
+            });
+        }
+    }
+
     // ─── QUIZ STATE ──────────────────────────────────────────────
     let quizState = {
         questions: [],
         currentIndex: 0,
-        score: 0,
+        score: 0,              // Only first-try correct
         triesLeft: 3,
         totalQuestions: 10,
-        answered: [],
+        answered: [],          // { status: 'correct'|'helped'|'wrong', triesUsed: N }
+        questionLocked: false, // Prevents double-clicks
         selectedCat: 'all'
     };
 
@@ -1903,6 +1988,9 @@
         });
     });
 
+    // Render past attempts on load
+    renderPastAttempts();
+
     // ─── START QUIZ ──────────────────────────────────────────────
     document.getElementById('start-quiz-btn').addEventListener('click', () => {
         const cat = document.getElementById('quiz-cat-select').value;
@@ -1927,6 +2015,7 @@
             triesLeft: 3,
             totalQuestions: pool.length,
             answered: new Array(pool.length).fill(null),
+            questionLocked: false,
             selectedCat: cat
         };
 
@@ -1940,23 +2029,22 @@
 
     // ─── RENDER QUESTION ─────────────────────────────────────────
     function renderQuizQuestion() {
-        const { questions: qs, currentIndex: ci, triesLeft, score, totalQuestions } = quizState;
+        const { questions: qs, currentIndex: ci, score, totalQuestions } = quizState;
         const q = qs[ci];
         const area = document.getElementById('quiz-area');
 
+        // Reset per-question state
+        quizState.triesLeft = 3;
+        quizState.questionLocked = false;
+
         // Update progress
         document.getElementById('quiz-progress-label').textContent = `Question ${ci + 1} of ${totalQuestions}`;
-        document.getElementById('quiz-score-label').textContent = `Score: ${score}/${totalQuestions}`;
+        updateScoreLabel();
         document.getElementById('quiz-progress-fill').style.width = `${((ci) / totalQuestions) * 100}%`;
 
         const diffClass = q.difficulty === 'beginner' ? 'diff-beginner' : q.difficulty === 'intermediate' ? 'diff-intermediate' : 'diff-advanced';
         const catLabel = { business: 'Business', models: 'Models', tuning: 'Tuning', appdev: 'App Dev', devsecops: 'DevSecOps' }[q.cat];
         const letters = ['A', 'B', 'C', 'D'];
-
-        // Tries indicator
-        const triesDots = [0, 1, 2].map(i =>
-            `<div class="tries-dot ${i < (3 - triesLeft) ? 'used' : 'remaining'}"></div>`
-        ).join('');
 
         area.innerHTML = `
             <div class="bg-white/[0.02] border border-white/5 rounded-xl overflow-hidden">
@@ -1969,7 +2057,9 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="font-mono text-[10px] text-chalk/30 uppercase tracking-wider mr-1">Tries</span>
-                        ${triesDots}
+                        <div class="tries-dot remaining" id="try-dot-0"></div>
+                        <div class="tries-dot remaining" id="try-dot-1"></div>
+                        <div class="tries-dot remaining" id="try-dot-2"></div>
                     </div>
                 </div>
 
@@ -1980,7 +2070,7 @@
                     <!-- Options -->
                     <div class="space-y-3" id="quiz-options">
                         ${q.options.map((opt, i) => `
-                            <div class="quiz-option flex items-center gap-4 px-5 py-4 rounded-lg" data-idx="${i}">
+                            <div class="quiz-option flex items-center gap-4 px-5 py-4 rounded-lg" data-idx="${i}" id="opt-${i}">
                                 <div class="opt-letter">${letters[i]}</div>
                                 <span class="text-chalk/80 text-[0.95rem]">${opt}</span>
                             </div>
@@ -1993,7 +2083,7 @@
 
                 <!-- Navigation -->
                 <div class="px-6 py-4 border-t border-white/5 flex justify-between items-center">
-                    <span class="font-mono text-xs text-chalk/30">${triesLeft} ${triesLeft === 1 ? 'try' : 'tries'} remaining</span>
+                    <span class="font-mono text-xs text-chalk/30" id="tries-remaining-text">3 tries remaining</span>
                     <button id="quiz-next-btn" class="hidden px-6 py-2 bg-ember text-chalk rounded-lg text-sm font-semibold hover:bg-ember/90 transition-all">
                         ${ci < totalQuestions - 1 ? 'Next Question →' : 'See Results →'}
                     </button>
@@ -2003,8 +2093,31 @@
 
         // Attach click handlers to options
         document.querySelectorAll('.quiz-option').forEach(opt => {
-            opt.addEventListener('click', () => handleAnswer(parseInt(opt.dataset.idx)));
+            opt.addEventListener('click', () => {
+                if (quizState.questionLocked) return; // ← GUARD: no clicks after resolved
+                handleAnswer(parseInt(opt.dataset.idx));
+            });
         });
+
+        // Wire next button ONCE
+        document.getElementById('quiz-next-btn').addEventListener('click', handleNext);
+    }
+
+    // ─── HANDLE NEXT ─────────────────────────────────────────────
+    function handleNext() {
+        quizState.currentIndex++;
+        if (quizState.currentIndex < quizState.totalQuestions) {
+            renderQuizQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    // ─── LOCK QUESTION (disable all options, show next) ──────────
+    function lockQuestion() {
+        quizState.questionLocked = true;
+        document.querySelectorAll('.quiz-option').forEach(o => o.classList.add('disabled'));
+        document.getElementById('quiz-next-btn').classList.remove('hidden');
     }
 
     // ─── HANDLE ANSWER ───────────────────────────────────────────
@@ -2014,45 +2127,54 @@
         const options = document.querySelectorAll('.quiz-option');
         const selectedOpt = options[selectedIdx];
         const feedback = document.getElementById('quiz-feedback');
+        const tryNumber = 4 - quizState.triesLeft; // 1, 2, or 3
 
         if (isCorrect) {
-            // CORRECT
+            // ─── CORRECT ───
             selectedOpt.classList.add('correct');
-            quizState.score++;
-            quizState.answered[quizState.currentIndex] = { correct: true, triesUsed: 4 - quizState.triesLeft };
 
-            // Disable all options
-            options.forEach(o => { if (o !== selectedOpt) o.classList.add('disabled'); });
+            // Only first-try counts as fully correct
+            if (tryNumber === 1) {
+                quizState.score++;
+                quizState.answered[quizState.currentIndex] = { status: 'correct', triesUsed: 1 };
+            } else {
+                // Got it right but needed hints — counts as "helped", NOT as a point
+                quizState.answered[quizState.currentIndex] = { status: 'helped', triesUsed: tryNumber };
+            }
 
-            // Update tries dots to success
-            const dots = document.querySelectorAll('.tries-dot.remaining');
-            dots.forEach(d => d.classList.replace('remaining', 'success'));
+            // Mark remaining dots as success
+            for (let i = tryNumber - 1; i < 3; i++) {
+                const d = document.getElementById(`try-dot-${i}`);
+                if (d) { d.classList.remove('remaining'); d.classList.add('success'); }
+            }
+
+            const statusLabel = tryNumber === 1
+                ? '<span class="font-semibold text-sage">✓ Correct — First Try!</span>'
+                : `<span class="font-semibold text-gold">✓ Correct — but needed ${tryNumber - 1} ${tryNumber - 1 === 1 ? 'hint' : 'hints'} (no point awarded)</span>`;
 
             feedback.innerHTML = `
-                <div class="feedback-panel bg-sage/10 border border-sage/20 rounded-lg px-5 py-4">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-sage text-lg">✓</span>
-                        <span class="font-semibold text-sage">Correct!</span>
-                    </div>
+                <div class="feedback-panel ${tryNumber === 1 ? 'bg-sage/10 border border-sage/20' : 'bg-gold/10 border border-gold/20'} rounded-lg px-5 py-4">
+                    <div class="flex items-center gap-2 mb-2">${statusLabel}</div>
                     <p class="text-chalk/60 text-sm">${q.hint}</p>
                 </div>
             `;
 
-            showNextButton();
+            lockQuestion();
             updateScoreLabel();
 
         } else {
-            // WRONG
+            // ─── WRONG ───
             selectedOpt.classList.add('wrong');
             selectedOpt.classList.add('disabled');
             quizState.triesLeft--;
 
-            // Update tries dots
-            const dots = document.querySelectorAll('.tries-dot.remaining');
-            if (dots.length > 0) dots[0].classList.replace('remaining', 'used');
+            // Mark the used try dot
+            const dotIdx = tryNumber - 1;
+            const dot = document.getElementById(`try-dot-${dotIdx}`);
+            if (dot) { dot.classList.remove('remaining'); dot.classList.add('used'); }
 
-            // Update tries counter text
-            const triesText = document.querySelector('.border-t .font-mono');
+            // Update remaining text
+            const triesText = document.getElementById('tries-remaining-text');
             if (triesText) triesText.textContent = `${quizState.triesLeft} ${quizState.triesLeft === 1 ? 'try' : 'tries'} remaining`;
 
             if (quizState.triesLeft === 2) {
@@ -2065,7 +2187,7 @@
                     <div class="feedback-panel bg-gold/5 border border-gold/20 rounded-lg px-5 py-4">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="text-gold text-lg">💡</span>
-                            <span class="font-semibold text-gold text-sm uppercase tracking-wider">Hint</span>
+                            <span class="font-semibold text-gold text-sm uppercase tracking-wider">Hint — Try Again</span>
                         </div>
                         <p class="text-chalk/70 text-sm mb-3">${q.hint}</p>
                         <div class="flex flex-wrap gap-1">${hintLinksHtml}</div>
@@ -2082,7 +2204,7 @@
                     <div class="feedback-panel bg-ember/5 border border-ember/20 rounded-lg px-5 py-4">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="text-ember text-lg">📖</span>
-                            <span class="font-semibold text-ember text-sm uppercase tracking-wider">Detailed Explanation</span>
+                            <span class="font-semibold text-ember text-sm uppercase tracking-wider">Detailed Explanation — Last Try</span>
                         </div>
                         <p class="text-chalk/70 text-sm mb-3">${q.detail}</p>
                         <div class="border-t border-white/5 pt-3 mt-3">
@@ -2093,12 +2215,11 @@
                 `;
 
             } else {
-                // ─── THIRD FAIL: Full Answer + Explanation + Links + Examples ───
-                quizState.answered[quizState.currentIndex] = { correct: false, triesUsed: 3 };
+                // ─── THIRD FAIL: Full Answer Revealed ───
+                quizState.answered[quizState.currentIndex] = { status: 'wrong', triesUsed: 3 };
 
-                // Highlight the correct answer
+                // Highlight correct answer
                 options[q.correct].classList.add('correct');
-                options.forEach(o => o.classList.add('disabled'));
 
                 const answerLinksHtml = q.answerLinks.map(l =>
                     `<a href="${l.url}" target="_blank" class="link-tag">↗ ${l.text}</a>`
@@ -2109,7 +2230,7 @@
                         <div class="bg-ember/10 px-5 py-3 border-b border-ember/20">
                             <div class="flex items-center gap-2">
                                 <span class="text-ember text-lg">✕</span>
-                                <span class="font-semibold text-ember text-sm uppercase tracking-wider">Answer Revealed</span>
+                                <span class="font-semibold text-ember text-sm uppercase tracking-wider">Incorrect — Answer Revealed</span>
                             </div>
                         </div>
                         <div class="px-5 py-4 bg-white/[0.01]">
@@ -2122,27 +2243,18 @@
                     </div>
                 `;
 
-                showNextButton();
+                lockQuestion();
                 updateScoreLabel();
             }
         }
     }
 
-    function showNextButton() {
-        document.getElementById('quiz-next-btn').classList.remove('hidden');
-        document.getElementById('quiz-next-btn').addEventListener('click', () => {
-            quizState.currentIndex++;
-            quizState.triesLeft = 3;
-            if (quizState.currentIndex < quizState.totalQuestions) {
-                renderQuizQuestion();
-            } else {
-                showResults();
-            }
-        });
-    }
-
     function updateScoreLabel() {
-        document.getElementById('quiz-score-label').textContent = `Score: ${quizState.score}/${quizState.totalQuestions}`;
+        const { score, totalQuestions, answered } = quizState;
+        const answeredCount = answered.filter(a => a !== null).length;
+        const wrong = answered.filter(a => a && a.status === 'wrong').length;
+        const helped = answered.filter(a => a && a.status === 'helped').length;
+        document.getElementById('quiz-score-label').textContent = `Score: ${score}/${totalQuestions} · ✓${score} ✕${wrong} ~${helped}`;
     }
 
     // ─── SHOW RESULTS ────────────────────────────────────────────
@@ -2152,7 +2264,14 @@
         const results = document.getElementById('quiz-results');
         results.classList.remove('hidden');
 
-        const pct = Math.round((quizState.score / quizState.totalQuestions) * 100);
+        const { score, totalQuestions, questions: qs, answered, selectedCat } = quizState;
+
+        // Compute stats from answered array
+        const correctCount = answered.filter(a => a && a.status === 'correct').length;
+        const helpedCount = answered.filter(a => a && a.status === 'helped').length;
+        const wrongCount = answered.filter(a => a && a.status === 'wrong').length;
+        const pct = Math.round((correctCount / totalQuestions) * 100);
+
         const circumference = 2 * Math.PI * 54;
         const offset = circumference - (pct / 100) * circumference;
         const grade = pct >= 90 ? 'A+' : pct >= 80 ? 'A' : pct >= 70 ? 'B' : pct >= 60 ? 'C' : pct >= 50 ? 'D' : 'F';
@@ -2162,22 +2281,43 @@
                        pct >= 50 ? 'Good effort! Review the topics you missed.' :
                        'Keep studying! Use the resources above to strengthen your knowledge.';
 
+        // Save to localStorage
+        saveQuizResult({
+            date: new Date().toISOString(),
+            correct: correctCount,
+            helped: helpedCount,
+            wrong: wrongCount,
+            total: totalQuestions,
+            pct: pct,
+            grade: grade,
+            category: selectedCat
+        });
+
         // Build per-question review
-        const reviewHtml = quizState.questions.map((q, i) => {
-            const ans = quizState.answered[i];
-            const wasCorrect = ans && ans.correct;
-            const icon = wasCorrect ? '✓' : '✕';
-            const color = wasCorrect ? 'text-sage' : 'text-ember';
-            const bg = wasCorrect ? 'bg-sage/5 border-sage/15' : 'bg-ember/5 border-ember/15';
+        const reviewHtml = qs.map((q, i) => {
+            const ans = answered[i];
+            const status = ans ? ans.status : 'wrong';
+            let icon, color, bg, statusText;
+
+            if (status === 'correct') {
+                icon = '✓'; color = 'text-sage'; bg = 'bg-sage/5 border-sage/15';
+                statusText = `1st try — +1 point`;
+            } else if (status === 'helped') {
+                icon = '~'; color = 'text-gold'; bg = 'bg-gold/5 border-gold/15';
+                statusText = `Needed ${ans.triesUsed} tries — 0 points (got it with help)`;
+            } else {
+                icon = '✕'; color = 'text-ember'; bg = 'bg-ember/5 border-ember/15';
+                statusText = `All 3 tries failed — 0 points`;
+            }
+
             const letters = ['A','B','C','D'];
             return `
                 <div class="flex items-start gap-3 px-4 py-3 rounded-lg border ${bg}">
-                    <span class="${color} font-bold text-sm mt-0.5">${icon}</span>
+                    <span class="${color} font-bold text-sm mt-0.5 w-4 text-center flex-shrink-0">${icon}</span>
                     <div class="flex-1 min-w-0">
                         <p class="text-chalk/80 text-sm leading-snug">${q.question}</p>
-                        <p class="font-mono text-xs mt-1 ${wasCorrect ? 'text-sage/70' : 'text-ember/70'}">
-                            Correct: ${letters[q.correct]}. ${q.options[q.correct]}
-                            ${ans ? ` — ${ans.triesUsed} ${ans.triesUsed === 1 ? 'try' : 'tries'} used` : ''}
+                        <p class="font-mono text-xs mt-1 ${color}/70">
+                            Answer: ${letters[q.correct]}. ${q.options[q.correct]} — ${statusText}
                         </p>
                     </div>
                 </div>
@@ -2195,22 +2335,38 @@
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center">
                         <span class="stat-number font-display text-3xl">${pct}%</span>
-                        <span class="font-mono text-[10px] text-chalk/40 uppercase">${quizState.score}/${quizState.totalQuestions}</span>
+                        <span class="font-mono text-[10px] text-chalk/40 uppercase">${correctCount}/${totalQuestions}</span>
                     </div>
                 </div>
-                <div class="mb-2">
+                <div class="mb-4">
                     <span class="font-display text-4xl ${gradeColor}">Grade: ${grade}</span>
                 </div>
-                <p class="text-chalk/50 max-w-md mx-auto">${message}</p>
+                <p class="text-chalk/50 max-w-md mx-auto mb-6">${message}</p>
+
+                <!-- Score Breakdown -->
+                <div class="flex justify-center gap-6 mb-2">
+                    <div class="text-center">
+                        <div class="text-sage font-display text-2xl">${correctCount}</div>
+                        <div class="font-mono text-[9px] text-sage/60 uppercase tracking-wider">Correct<br>(1st try)</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-gold font-display text-2xl">${helpedCount}</div>
+                        <div class="font-mono text-[9px] text-gold/60 uppercase tracking-wider">With Help<br>(no credit)</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-ember font-display text-2xl">${wrongCount}</div>
+                        <div class="font-mono text-[9px] text-ember/60 uppercase tracking-wider">Incorrect<br>(all 3 failed)</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Question Review -->
             <div class="mb-8">
-                <h3 class="font-mono text-xs text-chalk/40 uppercase tracking-widest mb-4">Question Review</h3>
+                <h3 class="font-mono text-xs text-chalk/40 uppercase tracking-widest mb-4">Question-by-Question Review</h3>
                 <div class="space-y-2">${reviewHtml}</div>
             </div>
 
-            <!-- Retry -->
+            <!-- Actions -->
             <div class="text-center">
                 <button id="print-cert-btn" class="px-8 py-3 bg-gold/20 border border-gold/40 text-gold rounded-lg font-semibold hover:bg-gold/30 transition-all mr-3">
                     🖨 Print Certificate
@@ -2223,7 +2379,7 @@
                 </button>
             </div>
 
-            <!-- Name Input Modal (hidden until print clicked) -->
+            <!-- Name Input Modal -->
             <div id="name-modal" class="hidden mt-6">
                 <div class="max-w-md mx-auto bg-white/[0.03] border border-white/10 rounded-xl p-6">
                     <p class="font-mono text-[10px] text-gold uppercase tracking-widest mb-3">Certificate Details</p>
@@ -2247,22 +2403,22 @@
             document.getElementById('score-ring').style.strokeDashoffset = offset;
         }, 100);
 
-        // Retake
+        // ─── Button handlers (all wired once here) ───
         document.getElementById('retake-quiz-btn').addEventListener('click', () => {
             results.classList.add('hidden');
             document.getElementById('quiz-config').classList.remove('hidden');
+            renderPastAttempts();
         });
 
         document.getElementById('back-to-study-btn').addEventListener('click', () => {
             results.classList.add('hidden');
             document.getElementById('quiz-config').classList.remove('hidden');
+            renderPastAttempts();
             document.getElementById('business').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Print Certificate
         document.getElementById('print-cert-btn').addEventListener('click', () => {
-            const modal = document.getElementById('name-modal');
-            modal.classList.remove('hidden');
+            document.getElementById('name-modal').classList.remove('hidden');
             document.getElementById('cert-name-input').focus();
         });
 
@@ -2275,11 +2431,9 @@
             generateCertificate(name);
         });
 
-        // Also allow Enter key in name input
         document.getElementById('cert-name-input').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                const name = e.target.value.trim() || 'Candidate';
-                generateCertificate(name);
+                generateCertificate(e.target.value.trim() || 'Candidate');
             }
         });
     }
@@ -2291,8 +2445,11 @@
     <script>
     // ─── CERTIFICATE GENERATOR ───────────────────────────────────
     function generateCertificate(candidateName) {
-        const { score, totalQuestions, questions: qs, answered, selectedCat } = quizState;
-        const pct = Math.round((score / totalQuestions) * 100);
+        const { totalQuestions, questions: qs, answered, selectedCat } = quizState;
+        const correctCount = answered.filter(a => a && a.status === 'correct').length;
+        const helpedCount = answered.filter(a => a && a.status === 'helped').length;
+        const wrongCount = answered.filter(a => a && a.status === 'wrong').length;
+        const pct = Math.round((correctCount / totalQuestions) * 100);
         const grade = pct >= 90 ? 'A+' : pct >= 80 ? 'A' : pct >= 70 ? 'B' : pct >= 60 ? 'C' : pct >= 50 ? 'D' : 'F';
         const now = new Date();
         const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -2316,15 +2473,18 @@
         const letters = ['A','B','C','D'];
         const reviewRowsHtml = qs.map((q, i) => {
             const ans = answered[i];
-            const wasCorrect = ans && ans.correct;
-            const iconClass = wasCorrect ? 'cert-q-correct' : 'cert-q-wrong';
-            const icon = wasCorrect ? '✓' : '✕';
+            const status = ans ? ans.status : 'wrong';
+            const isCorrect = status === 'correct';
+            const isHelped = status === 'helped';
+            const iconClass = isCorrect ? 'cert-q-correct' : (isHelped ? 'cert-q-helped' : 'cert-q-wrong');
+            const icon = isCorrect ? '✓' : (isHelped ? '~' : '✕');
+            const statusText = isCorrect ? '1st try ✓' : (isHelped ? `${ans.triesUsed} tries, with help` : 'All 3 failed');
             return `
                 <div class="cert-q-row">
                     <div class="cert-q-icon ${iconClass}">${icon}</div>
                     <div>
                         <div>${q.question}</div>
-                        <div class="cert-q-answer">Answer: ${letters[q.correct]}. ${q.options[q.correct]}${ans ? ' — ' + ans.triesUsed + (ans.triesUsed === 1 ? ' try' : ' tries') : ''}</div>
+                        <div class="cert-q-answer">Answer: ${letters[q.correct]}. ${q.options[q.correct]} — ${statusText}</div>
                     </div>
                 </div>
             `;
@@ -2357,7 +2517,7 @@
 
                     <div class="cert-score-box">
                         <div class="cert-stat">
-                            <div class="cert-stat-value">${score}/${totalQuestions}</div>
+                            <div class="cert-stat-value">${correctCount}/${totalQuestions}</div>
                             <div class="cert-stat-label">Questions Correct</div>
                         </div>
                         <div class="cert-stat">
@@ -2374,7 +2534,7 @@
 
                     <div class="cert-footer">
                         <div class="cert-sig-block">
-                            <div class="cert-sig-name">Z. Thornton</div>
+                            <div class="cert-sig-name">R. Lewis</div>
                             <div class="cert-sig-line">Director of AI Training</div>
                         </div>
                         <div class="cert-sig-block" style="text-align:center;">
@@ -2382,7 +2542,7 @@
                             <div class="cert-sig-line">Date of Completion</div>
                         </div>
                         <div class="cert-sig-block">
-                            <div class="cert-sig-name">M. Chen</div>
+                            <div class="cert-sig-name">Z. Lewis</div>
                             <div class="cert-sig-line">Chief Technology Officer</div>
                         </div>
                     </div>
@@ -2403,8 +2563,8 @@
 
                 <div style="display:flex; gap:15px; margin-bottom:20px;">
                     <div style="flex:1; background:#f8f6f1; padding:12px; border-radius:6px; text-align:center;">
-                        <div style="font-family:'Instrument Serif',serif; font-size:22px; color:#1a1a2e;">${score}/${totalQuestions}</div>
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:7px; color:#999; text-transform:uppercase; letter-spacing:0.1em;">Correct</div>
+                        <div style="font-family:'Instrument Serif',serif; font-size:22px; color:#1a1a2e;">${correctCount}/${totalQuestions}</div>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:7px; color:#999; text-transform:uppercase; letter-spacing:0.1em;">Correct (1st Try)</div>
                     </div>
                     <div style="flex:1; background:#f8f6f1; padding:12px; border-radius:6px; text-align:center;">
                         <div style="font-family:'Instrument Serif',serif; font-size:22px; color:#1a1a2e;">${pct}%</div>
