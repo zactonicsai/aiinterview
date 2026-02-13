@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI & ML Interview Mastery</title>
-    <script src="tailwinds.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -390,6 +390,71 @@
         @keyframes confettiFall {
             0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
             100% { transform: translateY(40px) rotate(360deg); opacity: 0; }
+        }
+
+        /* ─── LEARN MORE MODAL ─── */
+        .learn-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .learn-modal-backdrop.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        [data-theme="light"] .learn-modal-backdrop {
+            background: rgba(0,0,0,0.35);
+        }
+        .learn-modal {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-width: 640px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .learn-modal-backdrop.open .learn-modal {
+            transform: translateY(0) scale(1);
+        }
+        [data-theme="light"] .learn-modal {
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+        }
+        .learn-modal::-webkit-scrollbar { width: 6px; }
+        .learn-modal::-webkit-scrollbar-track { background: transparent; }
+        .learn-modal::-webkit-scrollbar-thumb { background: var(--text-ghost); border-radius: 3px; }
+
+        .learn-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(201,162,39,0.3);
+            background: rgba(201,162,39,0.08);
+            color: var(--gold);
+        }
+        .learn-btn:hover {
+            background: rgba(201,162,39,0.18);
+            border-color: rgba(201,162,39,0.5);
+            transform: translateY(-1px);
         }
 
         /* ─── PRINT CERTIFICATE STYLES ─── */
@@ -853,6 +918,20 @@
             <p class="text-xs t-text-ghost font-mono">Expand all answers. Study. Succeed.</p>
         </div>
     </footer>
+
+    <!-- Learn More Modal -->
+    <div id="learn-modal-backdrop" class="learn-modal-backdrop">
+        <div class="learn-modal" id="learn-modal">
+            <div class="px-6 py-4 border-b flex items-center justify-between" style="border-color:var(--border-subtle)">
+                <div class="flex items-center gap-3">
+                    <span class="text-lg">📚</span>
+                    <span class="font-display text-lg" id="learn-modal-title">Learn More</span>
+                </div>
+                <button id="learn-modal-close" class="w-8 h-8 rounded-lg flex items-center justify-center t-text-faint hover:text-ember transition-colors" style="background:var(--surface);border:1px solid var(--border)">✕</button>
+            </div>
+            <div class="px-6 py-5" id="learn-modal-body"></div>
+        </div>
+    </div>
 
     <script>
     const questions = [
@@ -2700,7 +2779,10 @@
 
                 <!-- Navigation -->
                 <div class="px-6 py-4 border-t flex justify-between items-center" style="border-color:var(--border-subtle)">
-                    <span class="font-mono text-xs t-text-faint" id="tries-remaining-text">3 tries remaining</span>
+                    <div class="flex items-center gap-3">
+                        <span class="font-mono text-xs t-text-faint" id="tries-remaining-text">3 tries remaining</span>
+                        <button id="quiz-learn-btn" class="learn-btn">📚 Learn More</button>
+                    </div>
                     <button id="quiz-next-btn" class="hidden px-6 py-2 bg-ember text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-all">
                         ${ci < totalQuestions - 1 ? 'Next Question →' : 'See Results →'}
                     </button>
@@ -2718,7 +2800,63 @@
 
         // Wire next button ONCE
         document.getElementById('quiz-next-btn').addEventListener('click', handleNext);
+
+        // Wire Learn More button
+        document.getElementById('quiz-learn-btn').addEventListener('click', () => openLearnMore(q, catLabel));
     }
+
+    // ─── LEARN MORE MODAL ────────────────────────────────────────
+    const learnBackdrop = document.getElementById('learn-modal-backdrop');
+    const learnModal = document.getElementById('learn-modal');
+    const learnClose = document.getElementById('learn-modal-close');
+    const learnTitle = document.getElementById('learn-modal-title');
+    const learnBody = document.getElementById('learn-modal-body');
+
+    function openLearnMore(q, catLabel) {
+        learnTitle.textContent = catLabel + ' — ' + (q.difficulty.charAt(0).toUpperCase() + q.difficulty.slice(1));
+
+        // Collect all unique links
+        const allLinks = [];
+        const seen = new Set();
+        [...(q.hintLinks || []), ...(q.detailLinks || []), ...(q.answerLinks || [])].forEach(l => {
+            if (!seen.has(l.url)) { seen.add(l.url); allLinks.push(l); }
+        });
+
+        const linksHtml = allLinks.map(l =>
+            `<a href="${l.url}" target="_blank" class="link-tag" style="margin:3px">↗ ${l.text}</a>`
+        ).join('');
+
+        learnBody.innerHTML = `
+            <div class="mb-5">
+                <p class="font-mono text-[10px] t-text-ghost uppercase tracking-widest mb-2">Topic Overview</p>
+                <p class="t-text-muted text-sm leading-relaxed">${q.hint}</p>
+            </div>
+            <div class="mb-5 p-4 rounded-lg" style="background:var(--surface);border:1px solid var(--border-subtle)">
+                <p class="font-mono text-[10px] t-text-ghost uppercase tracking-widest mb-2">Detailed Explanation</p>
+                <p class="t-text-80 text-sm leading-relaxed">${q.detail}</p>
+            </div>
+            <div>
+                <p class="font-mono text-[10px] t-text-ghost uppercase tracking-widest mb-3">📖 Reference Links (${allLinks.length})</p>
+                <div class="flex flex-wrap">${linksHtml}</div>
+            </div>
+        `;
+
+        learnBackdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLearnMore() {
+        learnBackdrop.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    learnClose.addEventListener('click', closeLearnMore);
+    learnBackdrop.addEventListener('click', (e) => {
+        if (e.target === learnBackdrop) closeLearnMore();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && learnBackdrop.classList.contains('open')) closeLearnMore();
+    });
 
     // ─── HANDLE NEXT ─────────────────────────────────────────────
     function handleNext() {
