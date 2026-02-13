@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI & ML Interview Mastery</title>
-    <script src="tailwinds.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -29,8 +29,70 @@
         }
     </script>
     <style>
+        /* ═══════════════════════════════════════════════════════════ */
+        /* THEME VARIABLES                                            */
+        /* ═══════════════════════════════════════════════════════════ */
+        :root {
+            --bg: #0a0a0b;
+            --bg-rgb: 10,10,11;
+            --text: #f5f2eb;
+            --text-rgb: 245,242,235;
+            --text-muted: rgba(245,242,235,0.5);
+            --text-faint: rgba(245,242,235,0.3);
+            --text-ghost: rgba(245,242,235,0.15);
+            --surface: rgba(255,255,255,0.02);
+            --surface-hover: rgba(255,255,255,0.05);
+            --surface-elevated: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+            --border-subtle: rgba(255,255,255,0.05);
+            --input-bg: rgba(255,255,255,0.05);
+            --nav-bg: rgba(10,10,11,0.85);
+            --filter-bg: rgba(10,10,11,0.95);
+            --card-hover-bg: rgba(232,69,14,0.03);
+            --card-active-bg: rgba(232,69,14,0.05);
+            --ember: #e8450e;
+            --gold: #c9a227;
+            --sage: #4a7c59;
+            --sage-text: #6db882;
+            --grain-opacity: 0.03;
+            --shadow: 0 1px 3px rgba(0,0,0,0.3);
+            --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23f5f2eb' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        }
+
+        [data-theme="light"] {
+            --bg: #f8f6f1;
+            --bg-rgb: 248,246,241;
+            --text: #1a1a2e;
+            --text-rgb: 26,26,46;
+            --text-muted: rgba(26,26,46,0.55);
+            --text-faint: rgba(26,26,46,0.35);
+            --text-ghost: rgba(26,26,46,0.12);
+            --surface: rgba(0,0,0,0.025);
+            --surface-hover: rgba(0,0,0,0.05);
+            --surface-elevated: rgba(0,0,0,0.035);
+            --border: rgba(0,0,0,0.1);
+            --border-subtle: rgba(0,0,0,0.06);
+            --input-bg: rgba(0,0,0,0.04);
+            --nav-bg: rgba(248,246,241,0.9);
+            --filter-bg: rgba(248,246,241,0.95);
+            --card-hover-bg: rgba(232,69,14,0.04);
+            --card-active-bg: rgba(232,69,14,0.07);
+            --ember: #d63b08;
+            --gold: #a88520;
+            --sage: #3d6b4c;
+            --sage-text: #3d6b4c;
+            --grain-opacity: 0.015;
+            --shadow: 0 1px 4px rgba(0,0,0,0.08);
+            --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231a1a2e' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        }
+
         * { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; background: #0a0a0b; color: #f5f2eb; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.35s ease, color 0.35s ease;
+        }
         .font-display { font-family: 'Instrument Serif', serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
 
@@ -40,10 +102,28 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            opacity: 0.03;
+            opacity: var(--grain-opacity);
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
             z-index: 9999;
         }
+
+        /* ─── THEME-AWARE OVERRIDES ─── */
+        /* These replace all the Tailwind white/ and chalk/ opacity utilities */
+
+        .t-bg          { background: var(--bg); }
+        .t-surface     { background: var(--surface); }
+        .t-surface-el  { background: var(--surface-elevated); }
+        .t-input       { background: var(--input-bg); }
+        .t-border      { border-color: var(--border); }
+        .t-border-sub  { border-color: var(--border-subtle); }
+        .t-text        { color: var(--text); }
+        .t-text-90     { color: var(--text); opacity: 0.9; }
+        .t-text-80     { color: var(--text); opacity: 0.8; }
+        .t-text-muted  { color: var(--text-muted); }
+        .t-text-faint  { color: var(--text-faint); }
+        .t-text-ghost  { color: var(--text-ghost); }
+        .t-nav         { background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .t-filter-bar  { background: var(--filter-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
 
         /* Accordion animations */
         .answer-panel {
@@ -52,31 +132,32 @@
             transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
             opacity: 0;
         }
-        .answer-panel.open {
-            opacity: 1;
-        }
+        .answer-panel.open { opacity: 1; }
 
         .q-card {
             border-left: 3px solid transparent;
             transition: all 0.3s ease;
         }
         .q-card:hover {
-            border-left-color: #e8450e;
-            background: rgba(232, 69, 14, 0.03);
+            border-left-color: var(--ember);
+            background: var(--card-hover-bg);
         }
         .q-card.active {
-            border-left-color: #e8450e;
-            background: rgba(232, 69, 14, 0.05);
+            border-left-color: var(--ember);
+            background: var(--card-active-bg);
         }
 
         /* Category pills */
         .cat-pill {
             transition: all 0.3s ease;
             cursor: pointer;
+            border-color: var(--border);
+            color: var(--text-muted);
         }
         .cat-pill:hover, .cat-pill.active {
-            background: #e8450e;
+            background: var(--ember);
             color: #f5f2eb;
+            border-color: var(--ember);
             transform: translateY(-1px);
         }
 
@@ -92,9 +173,7 @@
             from { width: 0; }
             to { width: 100%; }
         }
-        .hero-line {
-            animation: drawLine 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
+        .hero-line { animation: drawLine 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -117,7 +196,7 @@
             background: rgba(201,162,39,0.12);
             border: 1px solid rgba(201,162,39,0.25);
             border-radius: 4px;
-            color: #c9a227;
+            color: var(--gold);
             font-size: 0.75rem;
             font-family: 'JetBrains Mono', monospace;
             text-decoration: none;
@@ -128,6 +207,13 @@
             background: rgba(201,162,39,0.25);
             transform: translateY(-1px);
         }
+        [data-theme="light"] .link-tag {
+            background: rgba(168,133,32,0.1);
+            border-color: rgba(168,133,32,0.3);
+        }
+        [data-theme="light"] .link-tag:hover {
+            background: rgba(168,133,32,0.2);
+        }
 
         .difficulty-badge {
             font-size: 0.6rem;
@@ -136,22 +222,68 @@
             padding: 2px 8px;
             border-radius: 3px;
         }
-        .diff-beginner { background: rgba(74,124,89,0.2); color: #6db882; }
-        .diff-intermediate { background: rgba(201,162,39,0.2); color: #c9a227; }
-        .diff-advanced { background: rgba(232,69,14,0.2); color: #e8450e; }
+        .diff-beginner { background: rgba(74,124,89,0.2); color: var(--sage-text); }
+        .diff-intermediate { background: rgba(201,162,39,0.2); color: var(--gold); }
+        .diff-advanced { background: rgba(232,69,14,0.2); color: var(--ember); }
 
         .stat-number {
-            background: linear-gradient(135deg, #e8450e, #c9a227);
+            background: linear-gradient(135deg, var(--ember), var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        /* Search */
-        #search-input:focus {
+        /* ─── INPUTS, SELECTS, DROPDOWNS ─── */
+        .theme-input {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 0.5rem;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.35s, color 0.35s;
+        }
+        .theme-input:focus {
             outline: none;
-            border-color: #e8450e;
+            border-color: var(--ember);
             box-shadow: 0 0 0 3px rgba(232,69,14,0.15);
+        }
+        .theme-input::placeholder {
+            color: var(--text-faint);
+        }
+
+        .theme-select {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 0.5rem;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: var(--select-arrow);
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+            transition: border-color 0.2s, background 0.35s, color 0.35s;
+        }
+        .theme-select:focus {
+            outline: none;
+            border-color: var(--ember);
+        }
+        .theme-select option {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* Quiz number buttons (inactive state) */
+        .qn-btn {
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: transparent;
+            transition: all 0.2s ease;
+        }
+        .qn-btn:hover { border-color: rgba(232,69,14,0.4); }
+        .qn-btn.active {
+            background: var(--ember) !important;
+            color: #f5f2eb !important;
+            border-color: var(--ember) !important;
         }
 
         .toggle-icon {
@@ -161,13 +293,32 @@
             transform: rotate(45deg);
         }
 
+        /* ─── THEME TOGGLE BUTTON ─── */
+        .theme-toggle {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            border-color: var(--ember);
+            color: var(--ember);
+            background: var(--surface-hover);
+        }
+        .theme-toggle svg { width: 18px; height: 18px; }
+
         /* ─── QUIZ STYLES ─── */
         .quiz-option {
             transition: all 0.25s ease;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
+            background: transparent;
         }
         .quiz-option:hover:not(.disabled) {
             border-color: rgba(232,69,14,0.4);
@@ -175,15 +326,15 @@
             transform: translateX(4px);
         }
         .quiz-option.selected {
-            border-color: #e8450e;
+            border-color: var(--ember);
             background: rgba(232,69,14,0.08);
         }
         .quiz-option.correct {
-            border-color: #4a7c59 !important;
+            border-color: var(--sage) !important;
             background: rgba(74,124,89,0.12) !important;
         }
         .quiz-option.correct .opt-letter {
-            background: #4a7c59 !important;
+            background: var(--sage) !important;
             color: #f5f2eb !important;
         }
         .quiz-option.wrong {
@@ -203,7 +354,7 @@
             width: 28px; height: 28px;
             display: flex; align-items: center; justify-content: center;
             border-radius: 6px;
-            background: rgba(255,255,255,0.06);
+            background: var(--surface-elevated);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             font-weight: 600;
@@ -223,24 +374,18 @@
             transition: all 0.3s ease;
         }
         .tries-dot.used { background: #c0392b; }
-        .tries-dot.remaining { background: rgba(255,255,255,0.15); }
-        .tries-dot.success { background: #4a7c59; }
+        .tries-dot.remaining { background: var(--text-ghost); }
+        .tries-dot.success { background: var(--sage); }
 
-        .score-ring {
-            transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1);
-        }
+        .score-ring { transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1); }
 
-        .quiz-progress-fill {
-            transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-        }
+        .quiz-progress-fill { transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
 
         @keyframes pulseGlow {
             0%, 100% { box-shadow: 0 0 0 0 rgba(232,69,14,0.3); }
             50% { box-shadow: 0 0 20px 4px rgba(232,69,14,0.15); }
         }
-        .pulse-glow {
-            animation: pulseGlow 2s ease-in-out infinite;
-        }
+        .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
 
         @keyframes confettiFall {
             0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
@@ -541,20 +686,25 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-40 bg-ink/80 backdrop-blur-xl border-b border-white/5">
+    <nav class="fixed top-0 left-0 w-full z-40 t-nav border-b t-border-sub">
         <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-ember rounded flex items-center justify-center text-xs font-mono font-bold text-chalk">AI</div>
+                <div class="w-8 h-8 bg-ember rounded flex items-center justify-center text-xs font-mono font-bold text-white">AI</div>
                 <span class="font-display text-xl">Interview Mastery</span>
             </div>
-            <div class="hidden md:flex items-center gap-6 text-sm text-chalk/60">
+            <div class="hidden md:flex items-center gap-6 text-sm t-text-muted">
                 <a href="#business" class="hover:text-ember transition-colors">Business</a>
                 <a href="#models" class="hover:text-ember transition-colors">Models</a>
                 <a href="#tuning" class="hover:text-ember transition-colors">Tuning</a>
                 <a href="#appdev" class="hover:text-ember transition-colors">App Dev</a>
                 <a href="#devsecops" class="hover:text-ember transition-colors">DevSecOps</a>
+                <a href="#data" class="hover:text-ember transition-colors">Data</a>
                 <a href="#quiz" class="hover:text-ember transition-colors font-semibold">Quiz</a>
-                <span id="counter" class="font-mono text-xs text-ember bg-ember/10 px-2 py-1 rounded">0/50</span>
+                <span id="counter" class="font-mono text-xs text-ember bg-ember/10 px-2 py-1 rounded">0/60</span>
+                <button id="theme-toggle" class="theme-toggle" title="Toggle light/dark mode" aria-label="Toggle theme">
+                    <svg id="theme-icon-sun" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <svg id="theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </button>
             </div>
         </div>
     </nav>
@@ -562,53 +712,54 @@
     <!-- Hero -->
     <header class="pt-32 pb-20 px-6">
         <div class="max-w-6xl mx-auto">
-            <p class="font-mono text-xs text-ember tracking-widest uppercase mb-6 fade-up fade-up-1">Comprehensive Guide — 50 Questions</p>
+            <p class="font-mono text-xs text-ember tracking-widest uppercase mb-6 fade-up fade-up-1">Comprehensive Guide — 60 Questions</p>
             <h1 class="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6 fade-up fade-up-2">
                 AI & Machine Learning<br>
-                <span class="italic text-chalk/40">Interview Questions</span>
+                <span class="italic t-text-faint">Interview Questions</span>
             </h1>
             <div class="h-[1px] bg-gradient-to-r from-ember via-gold to-transparent hero-line mb-8"></div>
-            <p class="text-chalk/50 max-w-2xl text-lg leading-relaxed fade-up fade-up-3">
-                From business use cases to DevSecOps pipelines — master every dimension of AI in production.
+            <p class="t-text-muted max-w-2xl text-lg leading-relaxed fade-up fade-up-3">
+                From business use cases to data engineering pipelines and DevSecOps — master every dimension of AI in production.
                 Each question includes detailed answers, key tools, and curated learning resources.
             </p>
             <!-- Stats -->
             <div class="flex flex-wrap gap-8 mt-12 fade-up fade-up-4">
                 <div>
-                    <div class="stat-number font-display text-4xl">50</div>
-                    <div class="text-xs text-chalk/40 font-mono uppercase tracking-wider mt-1">Questions</div>
+                    <div class="stat-number font-display text-4xl">60</div>
+                    <div class="text-xs t-text-faint font-mono uppercase tracking-wider mt-1">Questions</div>
                 </div>
                 <div>
-                    <div class="stat-number font-display text-4xl">5</div>
-                    <div class="text-xs text-chalk/40 font-mono uppercase tracking-wider mt-1">Categories</div>
+                    <div class="stat-number font-display text-4xl">6</div>
+                    <div class="text-xs t-text-faint font-mono uppercase tracking-wider mt-1">Categories</div>
                 </div>
                 <div>
                     <div class="stat-number font-display text-4xl">100+</div>
-                    <div class="text-xs text-chalk/40 font-mono uppercase tracking-wider mt-1">Resources</div>
+                    <div class="text-xs t-text-faint font-mono uppercase tracking-wider mt-1">Resources</div>
                 </div>
                 <div>
                     <div class="stat-number font-display text-4xl">3</div>
-                    <div class="text-xs text-chalk/40 font-mono uppercase tracking-wider mt-1">Difficulty Levels</div>
+                    <div class="text-xs t-text-faint font-mono uppercase tracking-wider mt-1">Difficulty Levels</div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Filters & Search -->
-    <section class="px-6 pb-10 sticky top-[65px] z-30 bg-ink/95 backdrop-blur-xl border-b border-white/5">
+    <section class="px-6 pb-10 sticky top-[65px] z-30 t-filter-bar border-b" style="border-color:var(--border-subtle)">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
                 <div class="flex flex-wrap gap-2" id="category-filters">
-                    <button class="cat-pill active px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider border border-white/10 text-chalk/70" data-cat="all">All</button>
-                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider border border-white/10 text-chalk/70" data-cat="business">Business</button>
-                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider border border-white/10 text-chalk/70" data-cat="models">Models</button>
-                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider border border-white/10 text-chalk/70" data-cat="tuning">Tuning</button>
-                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider border border-white/10 text-chalk/70" data-cat="appdev">App Dev</button>
-                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider border border-white/10 text-chalk/70" data-cat="devsecops">DevSecOps</button>
+                    <button class="cat-pill active px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="all">All</button>
+                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="business">Business</button>
+                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="models">Models</button>
+                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="tuning">Tuning</button>
+                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="appdev">App Dev</button>
+                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="devsecops">DevSecOps</button>
+                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="data">Data Eng</button>
                 </div>
                 <div class="relative w-full md:w-72">
-                    <input id="search-input" type="text" placeholder="Search questions…" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-chalk placeholder:text-chalk/30 font-mono">
-                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-chalk/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input id="search-input" type="text" placeholder="Search questions…" class="theme-input w-full px-4 py-2 text-sm font-mono">
+                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 t-text-faint" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </div>
             </div>
         </div>
@@ -622,17 +773,17 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!-- QUIZ SECTION -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <section id="quiz" class="px-6 pt-20 pb-32 border-t border-white/5">
+    <section id="quiz" class="px-6 pt-20 pb-32 border-t" style="border-color:var(--border-subtle)">
         <div class="max-w-4xl mx-auto">
             <!-- Quiz Header -->
             <div class="mb-12">
                 <p class="font-mono text-xs text-ember tracking-widest uppercase mb-4">Test Your Knowledge</p>
                 <h2 class="font-display text-4xl md:text-6xl leading-[0.95] mb-4">
-                    AI & ML<br><span class="italic text-chalk/40">Challenge Quiz</span>
+                    AI & ML<br><span class="italic t-text-faint">Challenge Quiz</span>
                 </h2>
                 <div class="h-[1px] bg-gradient-to-r from-gold via-ember to-transparent mb-6"></div>
-                <p class="text-chalk/50 max-w-xl leading-relaxed">
-                    Randomized multiple-choice questions from all 5 categories. You get <strong class="text-chalk/80">3 tries</strong> per question — hints unlock on failure, building to the full explanation.
+                <p class="t-text-muted max-w-xl leading-relaxed">
+                    Randomized multiple-choice questions from all 6 categories. You get <strong class="t-text-80">3 tries</strong> per question — hints unlock on failure, building to the full explanation.
                 </p>
             </div>
 
@@ -640,42 +791,43 @@
             <div id="quiz-config" class="mb-8">
                 <div class="flex flex-wrap items-end gap-6">
                     <div>
-                        <label class="font-mono text-[10px] text-chalk/40 uppercase tracking-widest block mb-2">Number of Questions</label>
+                        <label class="font-mono text-[10px] t-text-faint uppercase tracking-widest block mb-2">Number of Questions</label>
                         <div class="flex gap-2" id="q-count-btns">
-                            <button data-n="10" class="qn-btn active px-4 py-2 rounded-lg text-sm font-mono border border-white/10 bg-ember text-chalk transition-all">10</button>
-                            <button data-n="20" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono border border-white/10 text-chalk/60 hover:border-ember/40 transition-all">20</button>
-                            <button data-n="30" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono border border-white/10 text-chalk/60 hover:border-ember/40 transition-all">30</button>
-                            <button data-n="50" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono border border-white/10 text-chalk/60 hover:border-ember/40 transition-all">All</button>
+                            <button data-n="10" class="qn-btn active px-4 py-2 rounded-lg text-sm font-mono transition-all">10</button>
+                            <button data-n="20" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono transition-all">20</button>
+                            <button data-n="30" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono transition-all">30</button>
+                            <button data-n="60" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono transition-all">All</button>
                         </div>
                     </div>
                     <div>
-                        <label class="font-mono text-[10px] text-chalk/40 uppercase tracking-widest block mb-2">Category</label>
-                        <select id="quiz-cat-select" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-chalk font-mono focus:outline-none focus:border-ember">
+                        <label class="font-mono text-[10px] t-text-faint uppercase tracking-widest block mb-2">Category</label>
+                        <select id="quiz-cat-select" class="theme-select px-4 py-2 text-sm font-mono">
                             <option value="all">All Categories</option>
                             <option value="business">Business Use Cases</option>
                             <option value="models">Building Models</option>
                             <option value="tuning">Tuning & Optimization</option>
                             <option value="appdev">App Development</option>
                             <option value="devsecops">DevSecOps & MLOps</option>
+                            <option value="data">Data Science & Engineering</option>
                         </select>
                     </div>
-                    <button id="start-quiz-btn" class="px-8 py-2.5 bg-ember text-chalk rounded-lg font-semibold text-sm hover:bg-ember/90 transition-all pulse-glow">
+                    <button id="start-quiz-btn" class="px-8 py-2.5 bg-ember text-white rounded-lg font-semibold text-sm hover:opacity-90 transition-all pulse-glow">
                         Start Quiz →
                     </button>
                 </div>
                 <!-- Past Attempts from localStorage -->
-                <div id="past-attempts" class="mt-6 p-4 bg-white/[0.02] border border-white/5 rounded-lg max-w-sm">
-                    <p class="font-mono text-[10px] text-chalk/30 uppercase tracking-widest mb-3">Past Attempts</p>
+                <div id="past-attempts" class="mt-6 p-4 t-surface rounded-lg max-w-sm" style="border:1px solid var(--border-subtle)">
+                    <p class="font-mono text-[10px] t-text-faint uppercase tracking-widest mb-3">Past Attempts</p>
                 </div>
             </div>
 
             <!-- Quiz Progress Bar -->
             <div id="quiz-progress-bar" class="hidden mb-8">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="font-mono text-xs text-chalk/40" id="quiz-progress-label">Question 1 of 10</span>
+                    <span class="font-mono text-xs t-text-faint" id="quiz-progress-label">Question 1 of 10</span>
                     <span class="font-mono text-xs text-ember" id="quiz-score-label">Score: 0</span>
                 </div>
-                <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div class="w-full h-1.5 rounded-full overflow-hidden" style="background:var(--border-subtle)">
                     <div id="quiz-progress-fill" class="quiz-progress-fill h-full bg-gradient-to-r from-ember to-gold rounded-full" style="width:0%"></div>
                 </div>
             </div>
@@ -689,13 +841,13 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/5 px-6 py-12">
+    <footer class="border-t px-6 py-12" style="border-color:var(--border-subtle)">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-6 h-6 bg-ember rounded flex items-center justify-center text-[10px] font-mono font-bold text-chalk">AI</div>
-                <span class="text-sm text-chalk/40">AI Interview Mastery — Built for aspiring Data Scientists & ML Engineers</span>
+                <div class="w-6 h-6 bg-ember rounded flex items-center justify-center text-[10px] font-mono font-bold text-white">AI</div>
+                <span class="text-sm t-text-faint">AI Interview Mastery — Built for aspiring Data Scientists & ML Engineers</span>
             </div>
-            <p class="text-xs text-chalk/30 font-mono">Expand all answers. Study. Succeed.</p>
+            <p class="text-xs t-text-ghost font-mono">Expand all answers. Study. Succeed.</p>
         </div>
     </footer>
 
@@ -1234,6 +1386,118 @@
                 { text: "Microsoft Presidio (PII)", url: "https://microsoft.github.io/presidio/" },
                 { text: "Open Policy Agent", url: "https://www.openpolicyagent.org/" }
             ]
+        },
+
+        // ─── DATA SCIENCE & DATA ENGINEERING (10) ─────────────────────
+        {
+            id: 51, cat: "data", difficulty: "beginner",
+            q: "What is the difference between a Data Engineer and a Data Scientist, and how do they collaborate on AI/ML projects?",
+            a: `These roles are complementary pillars of the data-to-AI pipeline:<br><br><strong>Data Engineer:</strong> Builds and maintains the infrastructure that makes data available and reliable. Designs data pipelines (ETL/ELT), data warehouses, data lakes, and streaming systems. Core skills: SQL, Python, Spark, Airflow, cloud platforms (AWS/GCP/Azure), infrastructure as code. Thinks in terms of <em>systems, scale, reliability, and latency</em>.<br><br><strong>Data Scientist:</strong> Extracts insights and builds predictive models from data. Performs EDA, statistical analysis, feature engineering, model training, and experimentation. Core skills: Python/R, statistics, ML algorithms, visualization, communication. Thinks in terms of <em>hypotheses, accuracy, and business impact</em>.<br><br><strong>Collaboration on AI/ML Projects:</strong><br>• Data Engineer builds ingestion pipelines from source systems → staging → warehouse/lake<br>• Data Scientist explores the data, identifies patterns, defines feature requirements<br>• Data Engineer productionizes feature pipelines and feature stores<br>• Data Scientist trains and evaluates models<br>• Data Engineer deploys model serving infrastructure and monitoring<br>• Both maintain data quality, schema contracts, and documentation<br><br>In modern orgs, the <strong>Analytics Engineer</strong> (using dbt) bridges the gap — transforming raw data into clean, modeled tables that both scientists and analysts can trust.`,
+            links: [
+                { text: "dbt (data build tool)", url: "https://www.getdbt.com/" },
+                { text: "Data Engineering on GCP", url: "https://cloud.google.com/learn/what-is-a-data-engineer" },
+                { text: "Chip Huyen: ML Systems", url: "https://huyenchip.com/machine-learning-systems-design/toc.html" }
+            ]
+        },
+        {
+            id: 52, cat: "data", difficulty: "intermediate",
+            q: "How do you design a modern data lakehouse architecture for AI/ML workloads?",
+            a: `The data lakehouse combines the flexibility of data lakes with the reliability of data warehouses:<br><br><strong>Traditional Stack Problems:</strong> Data lakes (S3/GCS) store everything cheaply but lack ACID transactions, schema enforcement, and governance. Warehouses (Redshift, BigQuery) have governance but are expensive for large-scale ML training and can't handle unstructured data (images, text, audio).<br><br><strong>Lakehouse Architecture:</strong> Open table formats on object storage that add warehouse-like features:<br>• <em>Delta Lake:</em> Databricks-led, ACID transactions, time travel, schema enforcement on Parquet files in S3/GCS/ADLS. Most mature ecosystem.<br>• <em>Apache Iceberg:</em> Netflix-originated, engine-agnostic (Spark, Trino, Flink, Dremio). Hidden partitioning, partition evolution. Growing rapidly.<br>• <em>Apache Hudi:</em> Uber-originated, excels at incremental processing and CDC (change data capture). Good for streaming + batch hybrid.<br><br><strong>Layers for ML:</strong><br>1. <em>Bronze (Raw):</em> Raw ingestion — schema-on-read, append-only. Sources: APIs, databases, event streams, files.<br>2. <em>Silver (Cleaned):</em> Deduplicated, validated, typed. Joins across sources. Data quality checks.<br>3. <em>Gold (Feature):</em> Business-level aggregations, feature tables for ML. Served to feature stores.<br><br><strong>Key Tools:</strong> Apache Spark (processing engine), dbt (SQL transformations), Great Expectations (data quality), Unity Catalog / Apache Polaris (governance), Apache Flink (streaming).`,
+            links: [
+                { text: "Delta Lake Documentation", url: "https://delta.io/" },
+                { text: "Apache Iceberg", url: "https://iceberg.apache.org/" },
+                { text: "Databricks Lakehouse", url: "https://www.databricks.com/product/data-lakehouse" },
+                { text: "Apache Hudi", url: "https://hudi.apache.org/" }
+            ]
+        },
+        {
+            id: 53, cat: "data", difficulty: "advanced",
+            q: "How do you build production-grade data pipelines that feed ML models with Spark, Airflow, and modern orchestration?",
+            a: `Production ML data pipelines must be reliable, observable, and reproducible:<br><br><strong>Orchestration Layer:</strong><br>• <em>Apache Airflow:</em> Industry standard. DAG-based workflow orchestration. Schedule, monitor, retry data pipelines. Extensive operator ecosystem (Spark, dbt, cloud services). Challenges: complex local development, DAG serialization.<br>• <em>Prefect / Dagster:</em> Modern alternatives. Dagster's software-defined assets model is particularly powerful for ML — define data assets and their dependencies, not just tasks. Better local dev, testing, and data lineage.<br>• <em>Mage AI:</em> Newer, notebook-friendly orchestrator with built-in data integration and ML pipeline support.<br><br><strong>Processing with Spark:</strong><br>• PySpark for large-scale transformations (joins, aggregations, window functions, UDFs on terabyte-scale data)<br>• Spark MLlib for distributed feature engineering (StringIndexer, VectorAssembler, StandardScaler)<br>• Delta Lake / Iceberg integration for ACID-compliant reads/writes<br>• Spark Structured Streaming for real-time feature computation<br>• Optimization: partition pruning, broadcast joins, AQE (Adaptive Query Execution), caching hot tables<br><br><strong>Pipeline Patterns for ML:</strong><br>• <em>Training Pipeline:</em> Extract historical data → Feature computation → Train/val split (time-based!) → Feature store write → Trigger training job<br>• <em>Inference Pipeline:</em> Real-time events → Stream processing → Feature lookup → Model serving → Prediction logging<br>• <em>Backfill Pipeline:</em> Recompute features for historical periods when logic changes. Must support idempotent reruns.`,
+            links: [
+                { text: "Apache Airflow", url: "https://airflow.apache.org/" },
+                { text: "Dagster", url: "https://dagster.io/" },
+                { text: "PySpark Documentation", url: "https://spark.apache.org/docs/latest/api/python/" },
+                { text: "Prefect", url: "https://www.prefect.io/" }
+            ]
+        },
+        {
+            id: 54, cat: "data", difficulty: "intermediate",
+            q: "What data quality frameworks and practices are essential for AI/ML reliability?",
+            a: `Data quality is the single biggest predictor of ML model success — garbage in, garbage out:<br><br><strong>Dimensions of Data Quality:</strong><br>• <em>Completeness:</em> Missing values, null rates, coverage of expected entities<br>• <em>Accuracy:</em> Values reflect reality (correct addresses, valid dates, reasonable ranges)<br>• <em>Consistency:</em> Same entity represented the same way across sources (name standardization, unit alignment)<br>• <em>Freshness/Timeliness:</em> Data arrives within expected SLA. Stale data causes model performance degradation<br>• <em>Uniqueness:</em> No unintended duplicates. Deduplication strategies for entity resolution<br>• <em>Schema Conformity:</em> Data matches expected types, constraints, and relationships<br><br><strong>Tools & Frameworks:</strong><br>• <em>Great Expectations:</em> Define data quality "expectations" as code (column values between X and Y, no nulls, unique keys). Run validations in pipelines. Generate data docs. Most popular open-source option.<br>• <em>dbt Tests:</em> Built-in and custom tests on transformed data — unique, not_null, accepted_values, relationships. Run as part of the transformation pipeline.<br>• <em>Soda:</em> Data quality monitoring with SodaCL language. Anomaly detection, schema checks, freshness monitoring.<br>• <em>Monte Carlo / Anomalo:</em> ML-powered data observability — auto-detect anomalies in volume, freshness, schema, distribution. Enterprise solutions.<br>• <em>Pandera:</em> Schema validation for pandas DataFrames. Type checking for data pipelines in Python.<br><br><strong>Integration with ML:</strong> Run data validation BEFORE model training. Block training if data quality checks fail. Track data quality metrics alongside model metrics. Correlate data quality changes with model performance shifts.`,
+            links: [
+                { text: "Great Expectations", url: "https://greatexpectations.io/" },
+                { text: "Soda Data Quality", url: "https://www.soda.io/" },
+                { text: "dbt Tests", url: "https://docs.getdbt.com/docs/build/data-tests" },
+                { text: "Pandera", url: "https://pandera.readthedocs.io/" }
+            ]
+        },
+        {
+            id: 55, cat: "data", difficulty: "advanced",
+            q: "How do you design and implement a real-time streaming data pipeline for ML features?",
+            a: `Real-time ML features require streaming architectures that compute features from events as they arrive:<br><br><strong>Streaming Platforms:</strong><br>• <em>Apache Kafka:</em> Distributed event streaming platform. Topics hold ordered, durable event logs. Producers write events, consumers read. Backbone of most streaming architectures. Confluent Cloud for managed Kafka.<br>• <em>Amazon Kinesis:</em> AWS-native streaming. Simpler than Kafka, tightly integrated with AWS ecosystem (Lambda, Firehose, Analytics).<br>• <em>Apache Pulsar:</em> Multi-tenancy, geo-replication, tiered storage. Alternative to Kafka with built-in multi-region support.<br><br><strong>Stream Processing Engines:</strong><br>• <em>Apache Flink:</em> Stateful stream processing with exactly-once semantics. Complex event processing, windowed aggregations, joins. The gold standard for real-time feature computation.<br>• <em>Spark Structured Streaming:</em> Micro-batch or continuous processing. Easier for teams already using Spark. Good for near-real-time (seconds).<br>• <em>Kafka Streams / ksqlDB:</em> Lightweight processing within Kafka. Good for simple transformations and enrichments without separate cluster.<br><br><strong>Real-Time Feature Patterns:</strong><br>• <em>Windowed Aggregations:</em> "Number of transactions in last 5 minutes" — tumbling, sliding, session windows.<br>• <em>Stream-Table Joins:</em> Enrich streaming events with dimension data (user profile, product catalog).<br>• <em>CDC (Change Data Capture):</em> Debezium captures database changes as events → Kafka → stream processing → feature store.<br>• <em>Lambda/Kappa Architecture:</em> Lambda: separate batch + stream paths. Kappa: single stream path for everything. Kappa is simpler but harder to handle historical reprocessing.<br><br><strong>Serving:</strong> Computed features written to online store (Redis, DynamoDB, ScyllaDB) for sub-millisecond lookup during model inference.`,
+            links: [
+                { text: "Apache Kafka", url: "https://kafka.apache.org/" },
+                { text: "Apache Flink", url: "https://flink.apache.org/" },
+                { text: "Debezium CDC", url: "https://debezium.io/" },
+                { text: "Confluent Cloud", url: "https://www.confluent.io/" }
+            ]
+        },
+        {
+            id: 56, cat: "data", difficulty: "intermediate",
+            q: "What is EDA (Exploratory Data Analysis) and what techniques does a Sr. Data Scientist use to prepare data for modeling?",
+            a: `EDA is the critical first step before any ML modeling — understanding your data deeply before making assumptions:<br><br><strong>Univariate Analysis:</strong><br>• Distribution analysis: histograms, KDE plots, box plots for continuous features. Value counts, bar plots for categoricals.<br>• Central tendency & spread: mean, median, mode, std, IQR, skewness, kurtosis.<br>• Outlier detection: Z-score (>3σ), IQR method (1.5×IQR), isolation forest for multivariate outliers.<br>• Missing value patterns: MCAR, MAR, or MNAR? Use missingno library to visualize patterns.<br><br><strong>Bivariate/Multivariate Analysis:</strong><br>• Correlation matrices (Pearson for linear, Spearman for monotonic, Cramér's V for categorical-categorical).<br>• Scatter plots with regression lines, pair plots (seaborn pairplot).<br>• Target variable analysis: class balance, target distribution by feature segments.<br>• Mutual information scores for non-linear feature-target relationships.<br><br><strong>Advanced EDA Techniques:</strong><br>• <em>Dimensionality reduction visualization:</em> PCA, t-SNE, UMAP to visualize high-dimensional data in 2D/3D. Identify clusters and separability.<br>• <em>Time series decomposition:</em> Trend, seasonality, residuals. ACF/PACF for autocorrelation.<br>• <em>Automated EDA:</em> ydata-profiling (formerly pandas-profiling) generates comprehensive HTML reports. Sweetviz for comparison reports. D-Tale for interactive exploration.<br>• <em>Statistical Tests:</em> Chi-squared (categorical independence), ANOVA (group differences), KS test (distribution comparison).<br><br><strong>Tools:</strong> pandas, matplotlib, seaborn, Plotly (interactive), Altair (declarative), ydata-profiling, missingno, scipy.stats.`,
+            links: [
+                { text: "ydata-profiling", url: "https://docs.profiling.ydata.ai/" },
+                { text: "Seaborn Tutorial", url: "https://seaborn.pydata.org/tutorial.html" },
+                { text: "Plotly Python", url: "https://plotly.com/python/" },
+                { text: "missingno Library", url: "https://github.com/ResidentMario/missingno" }
+            ]
+        },
+        {
+            id: 57, cat: "data", difficulty: "advanced",
+            q: "How do you implement data governance, lineage tracking, and catalog systems for enterprise ML?",
+            a: `Data governance ensures data is discoverable, trustworthy, compliant, and properly managed across the organization:<br><br><strong>Data Catalog:</strong> A searchable inventory of all data assets with metadata, ownership, descriptions, and usage information.<br>• <em>Databricks Unity Catalog:</em> Unified governance for data + AI. Fine-grained access control, lineage, audit logging across tables, files, models, and features.<br>• <em>Apache Atlas:</em> Open-source metadata management and governance. Type system, classification, lineage. Often used with Hadoop/Hive ecosystems.<br>• <em>Atlan / Alation:</em> Enterprise data catalogs with AI-powered discovery, social features (Slack-like collaboration on data), and automated documentation.<br>• <em>DataHub (LinkedIn):</em> Open-source metadata platform. Ingests metadata from dozens of sources. GraphQL API. Growing community.<br>• <em>OpenMetadata:</em> Open-source, schema-first metadata platform with lineage, quality, and profiling.<br><br><strong>Data Lineage:</strong> Understanding where data comes from, how it's transformed, and where it goes. Critical for debugging ML issues (why did model performance drop? → trace back to source data change).<br>• Column-level lineage: track which source columns feed which downstream features.<br>• Impact analysis: if I change this table, what downstream models/dashboards break?<br>• dbt lineage, Spark lineage, SQL parsing for automated lineage extraction.<br><br><strong>Access Control & Compliance:</strong><br>• Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC)<br>• Column-level masking for PII (dynamic data masking)<br>• Data classification (public, internal, confidential, restricted) with automated tagging<br>• Retention policies with automated enforcement<br>• GDPR: right to erasure must propagate through all downstream tables and model training data.`,
+            links: [
+                { text: "Databricks Unity Catalog", url: "https://www.databricks.com/product/unity-catalog" },
+                { text: "DataHub (LinkedIn)", url: "https://datahubproject.io/" },
+                { text: "OpenMetadata", url: "https://open-metadata.org/" },
+                { text: "Apache Atlas", url: "https://atlas.apache.org/" }
+            ]
+        },
+        {
+            id: 58, cat: "data", difficulty: "intermediate",
+            q: "What SQL and data modeling patterns should a Senior Data Engineer master for AI/ML data preparation?",
+            a: `SQL remains the lingua franca of data, and advanced patterns are essential for ML data prep:<br><br><strong>Advanced SQL for ML Features:</strong><br>• <em>Window Functions:</em> ROW_NUMBER, RANK, LAG/LEAD for sequential features. Rolling aggregations with ROWS BETWEEN. Percentile calculations with NTILE, PERCENT_RANK.<br>• <em>CTEs & Recursive CTEs:</em> Common Table Expressions for readable, modular queries. Recursive for hierarchical data (org charts, product categories, graph traversal).<br>• <em>PIVOT/UNPIVOT:</em> Reshape data for feature matrices. Wide-to-long and long-to-wide transformations.<br>• <em>QUALIFY:</em> Filter after window function evaluation (deduplication, latest-record-per-entity).<br>• <em>Sessionization:</em> Group events into sessions using LAG + conditional SUM windows. Critical for clickstream and user behavior features.<br><br><strong>Data Modeling for ML:</strong><br>• <em>Dimensional Modeling (Kimball):</em> Star schema (fact + dimension tables). Fact tables hold events/measurements, dimensions hold attributes. Optimized for analytical queries and feature extraction.<br>• <em>One Big Table (OBT):</em> Pre-joined, denormalized table for ML. Wide table with all features. Good for model training, bad for storage efficiency. Common in ML pipelines.<br>• <em>Activity Schema:</em> Generic event tables (entity_id, activity_type, timestamp, feature_json). Flexible for diverse ML features without schema changes.<br>• <em>Slowly Changing Dimensions (SCD):</em> Type 1 (overwrite), Type 2 (versioned history with valid_from/valid_to). SCD2 is essential for point-in-time correct feature engineering — must reconstruct what data looked like at any historical moment.<br><br><strong>dbt Patterns:</strong> Staging → Intermediate → Marts layering. Incremental models for efficiency. Snapshot models for SCD2. Macros for reusable SQL logic. Custom schema tests for data quality.`,
+            links: [
+                { text: "dbt Best Practices", url: "https://docs.getdbt.com/best-practices" },
+                { text: "Kimball Dimensional Modeling", url: "https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/" },
+                { text: "Modern Data Stack", url: "https://www.moderndatastack.xyz/" },
+                { text: "SQL for Data Science (Mode)", url: "https://mode.com/sql-tutorial/" }
+            ]
+        },
+        {
+            id: 59, cat: "data", difficulty: "advanced",
+            q: "How do you handle data at scale: partitioning strategies, file formats, and storage optimization for ML training?",
+            a: `Efficient storage and access patterns are critical when ML training data reaches terabyte/petabyte scale:<br><br><strong>File Formats for ML:</strong><br>• <em>Apache Parquet:</em> Columnar format. Best for analytical queries and feature selection (read only needed columns). Snappy/Zstd compression. Industry standard for data lakes. 10-100x smaller than CSV.<br>• <em>Apache ORC:</em> Columnar, optimized for Hive. Better compression than Parquet in some cases. Predicate pushdown.<br>• <em>Apache Avro:</em> Row-based format. Best for write-heavy streaming ingestion. Schema evolution friendly.<br>• <em>TFRecord/WebDataset:</em> Specialized formats for ML training. Sequential reads optimized for GPU feeding. WebDataset (tar-based) for PyTorch distributed training.<br>• <em>Lance:</em> Modern columnar format designed for ML. Random access + sequential reads, versioning, vector embeddings support.<br><br><strong>Partitioning Strategies:</strong><br>• <em>Time-based:</em> year/month/day for event data. Enables efficient time-range queries for training windows.<br>• <em>Hash-based:</em> Even distribution across partitions. Good for join operations.<br>• <em>Category-based:</em> By region, product type. Enables targeted model training.<br>• <em>Iceberg Hidden Partitioning:</em> Users write queries without knowing partition scheme — the engine optimizes automatically.<br>• <em>Anti-pattern:</em> Over-partitioning creates too many small files → "small file problem" kills query performance. Target 100MB-1GB per file.<br><br><strong>Storage Optimization:</strong><br>• Z-Ordering / Hilbert curves for multi-dimensional data co-locality<br>• Compaction: merge small files into optimal-sized files<br>• Data skipping / min-max statistics per file for predicate pushdown<br>• Tiered storage: hot (SSD/NVMe) → warm (HDD) → cold (S3 Glacier/Archive) based on access patterns<br>• Vacuum / retention policies to manage historical versions and reduce costs`,
+            links: [
+                { text: "Apache Parquet", url: "https://parquet.apache.org/" },
+                { text: "Delta Lake Optimization", url: "https://docs.delta.io/latest/optimizations-oss.html" },
+                { text: "Lance Format", url: "https://lancedb.github.io/lance/" },
+                { text: "WebDataset for ML", url: "https://github.com/webdataset/webdataset" }
+            ]
+        },
+        {
+            id: 60, cat: "data", difficulty: "intermediate",
+            q: "What are the key tools and techniques for data labeling, annotation, and synthetic data generation for ML?",
+            a: `High-quality labeled data is the fuel for supervised learning — acquiring and managing it is a core data science competency:<br><br><strong>Data Labeling Platforms:</strong><br>• <em>Label Studio:</em> Open-source. Supports text, image, audio, video, time series. Custom labeling interfaces. ML-assisted labeling (pre-annotations). Self-hosted for data privacy.<br>• <em>Labelbox:</em> Enterprise labeling platform. Workflow management, quality control, model-assisted labeling. Strong for computer vision projects.<br>• <em>Scale AI:</em> Managed labeling workforce + platform. High quality for autonomous driving, NLP, document processing. API-based integration.<br>• <em>Prodigy:</em> By spaCy creators. Active learning-powered annotation — model suggests labels, human corrects. Extremely efficient for NLP tasks.<br>• <em>Amazon SageMaker Ground Truth:</em> Managed labeling with human + ML. Built-in workforce management. Active learning to reduce labeling cost.<br><br><strong>Active Learning:</strong> Train an initial model → identify the most uncertain/informative samples → prioritize those for human labeling → retrain. Dramatically reduces labeling costs (often 3-10x fewer labels needed). Strategies: uncertainty sampling, query-by-committee, expected gradient length.<br><br><strong>Synthetic Data Generation:</strong><br>• <em>Tabular:</em> SMOTE for class balancing, SDV (Synthetic Data Vault) for generating realistic tabular data from learned distributions, Gretel.ai for privacy-safe synthetic data.<br>• <em>Images:</em> Diffusion models (Stable Diffusion) for generating training images. Domain randomization for robotics/sim-to-real. Albumentations for augmentation.<br>• <em>Text:</em> LLM-generated training data (distillation). Use Claude/GPT to generate diverse examples for classification, NER, etc. Careful validation needed.<br>• <em>Privacy-Preserving:</em> Differential privacy + synthetic data for sharing sensitive datasets without exposing real records. MOSTLY AI, Gretel.ai.<br><br><strong>Weak Supervision:</strong> Snorkel-style programmatic labeling — write labeling functions (heuristics, pattern matching, existing models) that generate noisy labels, then a label model combines them into probabilistic labels. Enables training on data that would be too expensive to label manually.`,
+            links: [
+                { text: "Label Studio", url: "https://labelstud.io/" },
+                { text: "Snorkel AI (Weak Supervision)", url: "https://snorkel.ai/" },
+                { text: "SDV (Synthetic Data Vault)", url: "https://sdv.dev/" },
+                { text: "Prodigy (spaCy)", url: "https://prodi.gy/" },
+                { text: "Albumentations", url: "https://albumentations.ai/" }
+            ]
         }
     ];
 
@@ -1248,7 +1512,8 @@
         models: '02 — Building ML Models',
         tuning: '03 — Model Tuning & Optimization',
         appdev: '04 — AI in Application Development',
-        devsecops: '05 — DevSecOps & MLOps'
+        devsecops: '05 — DevSecOps & MLOps',
+        data: '06 — Data Science & Data Engineering'
     };
 
     const catAnchors = {
@@ -1256,7 +1521,8 @@
         models: 'models',
         tuning: 'tuning',
         appdev: 'appdev',
-        devsecops: 'devsecops'
+        devsecops: 'devsecops',
+        data: 'data'
     };
 
     function renderQuestions(filter = 'all', search = '') {
@@ -1275,16 +1541,16 @@
                 currentCat = q.cat;
                 const sectionHeader = document.createElement('div');
                 sectionHeader.id = catAnchors[q.cat];
-                sectionHeader.className = 'pt-16 pb-6 border-b border-white/5 mb-2';
+                sectionHeader.className = 'pt-16 pb-6 border-b mb-2'; sectionHeader.style.borderColor = 'var(--border-subtle)';
                 sectionHeader.innerHTML = `
                     <p class="font-mono text-xs text-ember tracking-widest uppercase mb-2">${catNames[q.cat].split(' — ')[0]}</p>
-                    <h2 class="font-display text-3xl md:text-4xl text-chalk/90">${catNames[q.cat].split(' — ')[1]}</h2>
+                    <h2 class="font-display text-3xl md:text-4xl t-text-90">${catNames[q.cat].split(' — ')[1]}</h2>
                 `;
                 container.appendChild(sectionHeader);
             }
 
             const card = document.createElement('div');
-            card.className = 'q-card py-5 px-5 border-b border-white/5 cursor-pointer';
+            card.className = 'q-card py-5 px-5 border-b cursor-pointer'; card.style.borderColor = 'var(--border-subtle)';
             card.dataset.id = q.id;
 
             const diffClass = q.difficulty === 'beginner' ? 'diff-beginner' : q.difficulty === 'intermediate' ? 'diff-intermediate' : 'diff-advanced';
@@ -1297,18 +1563,18 @@
                 <div class="flex items-start justify-between gap-4">
                     <div class="flex-1">
                         <div class="flex items-center gap-3 mb-2">
-                            <span class="font-mono text-xs text-chalk/30">Q${String(q.id).padStart(2, '0')}</span>
+                            <span class="font-mono text-xs t-text-faint">Q${String(q.id).padStart(2, '0')}</span>
                             <span class="difficulty-badge font-mono ${diffClass}">${q.difficulty}</span>
                         </div>
-                        <h3 class="text-lg text-chalk/90 leading-snug font-medium">${q.q}</h3>
+                        <h3 class="text-lg t-text-90 leading-snug font-medium">${q.q}</h3>
                     </div>
-                    <div class="toggle-icon text-chalk/30 text-2xl leading-none mt-1 flex-shrink-0 select-none">+</div>
+                    <div class="toggle-icon t-text-faint text-2xl leading-none mt-1 flex-shrink-0 select-none">+</div>
                 </div>
                 <div class="answer-panel">
                     <div class="pt-5 pb-2">
-                        <div class="text-chalk/65 leading-relaxed text-[0.94rem] mb-5">${q.a}</div>
-                        <div class="border-t border-white/5 pt-4">
-                            <p class="font-mono text-[10px] text-chalk/30 uppercase tracking-widest mb-2">Learn More</p>
+                        <div class="t-text-muted leading-relaxed text-[0.94rem] mb-5">${q.a}</div>
+                        <div class="border-t pt-4" style="border-color:var(--border-subtle)">
+                            <p class="font-mono text-[10px] t-text-ghost uppercase tracking-widest mb-2">Learn More</p>
                             <div class="flex flex-wrap gap-1">${linksHtml}</div>
                         </div>
                     </div>
@@ -1343,8 +1609,8 @@
         if (filtered.length === 0) {
             container.innerHTML = `
                 <div class="text-center py-20">
-                    <p class="font-display text-3xl text-chalk/20 mb-2">No results found</p>
-                    <p class="text-chalk/40 text-sm">Try adjusting your search or category filter</p>
+                    <p class="font-display text-3xl t-text-ghost mb-2">No results found</p>
+                    <p class="t-text-faint text-sm">Try adjusting your search or category filter</p>
                 </div>
             `;
         }
@@ -1376,6 +1642,42 @@
         const height = document.documentElement.scrollHeight - window.innerHeight;
         const progress = Math.min(scrolled / height, 1);
         document.getElementById('progress-bar').style.transform = `scaleX(${progress})`;
+    });
+
+    // ─── THEME TOGGLE ───────────────────────────────────────────
+    const THEME_KEY = 'zactonics_theme';
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('theme-toggle');
+    const sunIcon = document.getElementById('theme-icon-sun');
+    const moonIcon = document.getElementById('theme-icon-moon');
+
+    function setTheme(theme) {
+        if (theme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            html.removeAttribute('data-theme');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+        try { localStorage.setItem(THEME_KEY, theme); } catch(e) {}
+    }
+
+    // Initialize from localStorage or system preference
+    (function() {
+        let saved = null;
+        try { saved = localStorage.getItem(THEME_KEY); } catch(e) {}
+        if (saved) {
+            setTheme(saved);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            setTheme('light');
+        }
+    })();
+
+    themeToggle.addEventListener('click', () => {
+        const isLight = html.getAttribute('data-theme') === 'light';
+        setTheme(isLight ? 'dark' : 'light');
     });
 
     // Initial render
@@ -1873,6 +2175,107 @@
                 { text: "featurestore.org (Comparison)", url: "https://www.featurestore.org/" },
                 { text: "Uber Michelangelo Architecture", url: "https://www.uber.com/blog/michelangelo-machine-learning-platform/" }
             ]
+        },
+        // ─── DATA SCIENCE & DATA ENGINEERING (5) ───
+        {
+            cat: "data", difficulty: "intermediate",
+            question: "In a data lakehouse architecture, what does the Bronze → Silver → Gold medallion pattern represent?",
+            options: ["Three different cloud providers", "Raw → Cleaned → Business-ready data layers", "Three ML model sizes", "Database backup tiers"],
+            correct: 1,
+            hint: "Think of progressive data refinement — each layer adds more structure and business logic.",
+            hintLinks: [{ text: "Delta Lake Documentation", url: "https://delta.io/" }],
+            detail: "The medallion architecture is a data design pattern: Bronze stores raw, unprocessed ingested data (schema-on-read). Silver contains cleaned, deduplicated, validated, and joined data. Gold holds business-level aggregations, feature tables, and ML-ready datasets. Each layer builds on the previous with increasing quality and usability.",
+            detailLinks: [
+                { text: "Databricks Lakehouse", url: "https://www.databricks.com/product/data-lakehouse" },
+                { text: "Apache Iceberg", url: "https://iceberg.apache.org/" }
+            ],
+            answerExplanation: "The answer is <strong>Raw → Cleaned → Business-ready data layers</strong>. The medallion pattern structures a lakehouse into progressive quality tiers: (1) <em>Bronze:</em> Raw data exactly as received — append-only, schema-on-read, full history. Sources include APIs, CDC streams, file drops, event logs. (2) <em>Silver:</em> Cleaned and conformed — deduplication, null handling, type casting, cross-source joins, data quality checks (Great Expectations). This is where most data engineering effort goes. (3) <em>Gold:</em> Business aggregations and ML feature tables — KPIs, dimensional models, pre-computed features ready for model training. Tools like Delta Lake, Iceberg, or Hudi provide ACID transactions at each layer. dbt typically handles Silver → Gold transformations with SQL.",
+            answerLinks: [
+                { text: "Delta Lake Medallion Architecture", url: "https://www.databricks.com/glossary/medallion-architecture" },
+                { text: "dbt (data build tool)", url: "https://www.getdbt.com/" },
+                { text: "Apache Hudi", url: "https://hudi.apache.org/" },
+                { text: "Great Expectations", url: "https://greatexpectations.io/" }
+            ]
+        },
+        {
+            cat: "data", difficulty: "beginner",
+            question: "Which open-source tool is the industry standard for orchestrating data pipelines with DAG-based workflows?",
+            options: ["Apache Kafka", "Apache Airflow", "Redis", "Nginx"],
+            correct: 1,
+            hint: "This tool uses Directed Acyclic Graphs (DAGs) written in Python to schedule, monitor, and retry data tasks.",
+            hintLinks: [{ text: "Airflow Documentation", url: "https://airflow.apache.org/" }],
+            detail: "Apache Airflow (originally from Airbnb) is the dominant open-source workflow orchestrator. It uses Python-defined DAGs (Directed Acyclic Graphs) to model task dependencies and schedules. It provides a web UI for monitoring, supports retries, alerts, and has operators for Spark, dbt, cloud services, databases, and more.",
+            detailLinks: [
+                { text: "Dagster (Alternative)", url: "https://dagster.io/" },
+                { text: "Prefect (Alternative)", url: "https://www.prefect.io/" }
+            ],
+            answerExplanation: "The answer is <strong>Apache Airflow</strong>. Kafka is a distributed event streaming platform (not an orchestrator). Redis is an in-memory data store. Nginx is a web server. Airflow specifically solves pipeline orchestration: you define tasks and their dependencies as a DAG in Python, set a schedule (e.g., daily at 2 AM), and Airflow handles execution, retries on failure, alerting, and provides a web dashboard to monitor pipeline health. Example: <code>extract_task >> transform_task >> load_task >> train_model_task</code>. Airflow has 30K+ GitHub stars and is used by Airbnb, Lyft, Twitter, and thousands of companies. Modern alternatives include Dagster (software-defined assets model, better testing) and Prefect (simpler API, hybrid execution).",
+            answerLinks: [
+                { text: "Airflow GitHub", url: "https://github.com/apache/airflow" },
+                { text: "Astronomer (Managed Airflow)", url: "https://www.astronomer.io/" },
+                { text: "Dagster Documentation", url: "https://docs.dagster.io/" },
+                { text: "Mage AI", url: "https://www.mage.ai/" }
+            ]
+        },
+        {
+            cat: "data", difficulty: "advanced",
+            question: "Which file format is the industry standard for columnar storage in data lakes, providing 10-100x compression over CSV and enabling predicate pushdown?",
+            options: ["JSON", "Apache Parquet", "XML", "Plain CSV"],
+            correct: 1,
+            hint: "This columnar format stores data by column rather than by row, enabling you to read only the columns needed for a query.",
+            hintLinks: [{ text: "Apache Parquet", url: "https://parquet.apache.org/" }],
+            detail: "Apache Parquet is a columnar storage format designed for analytics. Because data is stored column-by-column, queries that only need a few columns skip reading the rest entirely. It supports efficient compression (Snappy, Zstd, GZIP) and encoding schemes (dictionary, run-length, delta) that exploit within-column homogeneity. Predicate pushdown uses min/max statistics per row group to skip irrelevant data without reading it.",
+            detailLinks: [
+                { text: "Lance Format (for ML)", url: "https://lancedb.github.io/lance/" },
+                { text: "Apache ORC (Alternative)", url: "https://orc.apache.org/" }
+            ],
+            answerExplanation: "The answer is <strong>Apache Parquet</strong>. JSON is row-oriented and verbose (poor for analytics). XML is even more verbose. CSV has no types, no compression, and requires reading entire rows. Parquet stores each column separately, enabling: (1) <em>Column pruning:</em> query needs 3 of 200 columns? Read only those 3. (2) <em>Predicate pushdown:</em> each row group (typically 128MB) stores min/max statistics — if you filter WHERE age > 50 and a row group's max age is 30, skip it entirely. (3) <em>Efficient compression:</em> columns of the same type compress much better than mixed-type rows — dictionary encoding for strings, delta encoding for timestamps, run-length for repeated values. A 100GB CSV typically becomes 5-15GB in Parquet. Every major processing engine supports it: Spark, DuckDB, Polars, pandas (via PyArrow), BigQuery, Athena, Trino.",
+            answerLinks: [
+                { text: "Parquet Format Specification", url: "https://parquet.apache.org/documentation/latest/" },
+                { text: "DuckDB (fast Parquet queries)", url: "https://duckdb.org/" },
+                { text: "Polars DataFrame Library", url: "https://pola.rs/" },
+                { text: "PyArrow Documentation", url: "https://arrow.apache.org/docs/python/" }
+            ]
+        },
+        {
+            cat: "data", difficulty: "intermediate",
+            question: "What technique captures database row-level changes (inserts, updates, deletes) as a real-time event stream for downstream ML pipelines?",
+            options: ["Full table dump every hour", "Change Data Capture (CDC)", "Manual CSV export", "Database indexing"],
+            correct: 1,
+            hint: "This technique reads the database's transaction log (WAL/binlog) to emit change events without impacting the source database performance.",
+            hintLinks: [{ text: "Debezium CDC", url: "https://debezium.io/" }],
+            detail: "Change Data Capture (CDC) reads the database's write-ahead log (PostgreSQL WAL, MySQL binlog, MongoDB oplog) to capture every row change as a structured event. Events are streamed to Kafka/Kinesis and consumed by downstream pipelines. This is far more efficient than periodic full dumps — lower latency, lower source DB load, and captures all changes including deletes.",
+            detailLinks: [
+                { text: "Confluent CDC Patterns", url: "https://www.confluent.io/learn/change-data-capture/" },
+                { text: "Airbyte (ELT)", url: "https://airbyte.com/" }
+            ],
+            answerExplanation: "The answer is <strong>Change Data Capture (CDC)</strong>. Full table dumps are wasteful (re-read unchanged data), high latency (hourly/daily), and miss intermediate states. CSV export is manual and error-prone. Database indexing improves query performance, not data replication. CDC with Debezium works by: (1) Connecting to the database's transaction log (non-invasive, minimal performance impact on source), (2) Emitting structured events for every INSERT, UPDATE, DELETE with before/after row values, (3) Publishing events to Kafka topics (one topic per table), (4) Downstream consumers process events for feature computation, data lake ingestion, or cache invalidation. This powers real-time ML features: 'user just changed their address' triggers immediate feature recomputation. Tools: Debezium (open-source, most popular), Fivetran/Airbyte (managed ELT with CDC), AWS DMS, Oracle GoldenGate.",
+            answerLinks: [
+                { text: "Debezium Documentation", url: "https://debezium.io/documentation/" },
+                { text: "Fivetran CDC", url: "https://www.fivetran.com/" },
+                { text: "Apache Kafka", url: "https://kafka.apache.org/" },
+                { text: "Materialize (Streaming SQL)", url: "https://materialize.com/" }
+            ]
+        },
+        {
+            cat: "data", difficulty: "advanced",
+            question: "For building ML training datasets, what critical concept ensures you only use feature values that were available AT the time of each historical prediction?",
+            options: ["Data normalization", "Point-in-time correctness", "One-hot encoding", "Batch processing"],
+            correct: 1,
+            hint: "If you compute a feature using data from AFTER the event you're trying to predict, you've introduced a subtle but devastating form of data leakage.",
+            hintLinks: [{ text: "Feast Feature Store", url: "https://feast.dev/" }],
+            detail: "Point-in-time correctness ensures temporal integrity in training data. When constructing historical feature vectors, you must reconstruct the exact feature values available at each timestamp — not use current values or future data. Without this, models learn from information they wouldn't have in production, leading to inflated offline metrics and poor real-world performance.",
+            detailLinks: [
+                { text: "Tecton Feature Engineering", url: "https://www.tecton.ai/" },
+                { text: "Hopsworks", url: "https://www.hopsworks.ai/" }
+            ],
+            answerExplanation: "The answer is <strong>Point-in-time correctness</strong>. This is one of the most subtle and dangerous forms of data leakage. Example: You're building a fraud model. For a transaction on Jan 15, you need 'user_avg_spending_30d'. If you compute this using the user's current spending pattern (which includes data after Jan 15), your training data is contaminated with future information. The model sees artificially informative features during training but won't have them during real-time prediction. Result: stellar offline metrics, terrible production performance. The fix: (1) Store timestamped feature values (SCD Type 2 or event-sourced features), (2) When building training sets, join features using <code>AS OF</code> timestamp joins — only include feature values from BEFORE each training example's event time, (3) Feature stores like Feast, Tecton, and Hopsworks handle this automatically with their <code>get_historical_features(entity_df_with_timestamps)</code> API. Data normalization is a scaling technique. One-hot encoding handles categoricals. Batch processing is a compute pattern. None address temporal correctness.",
+            answerLinks: [
+                { text: "Feast Point-in-Time Joins", url: "https://docs.feast.dev/getting-started/concepts/point-in-time-joins" },
+                { text: "Tecton Time-Travel Features", url: "https://www.tecton.ai/blog/" },
+                { text: "Chip Huyen: Data Leakage", url: "https://huyenchip.com/machine-learning-systems-design/toc.html" },
+                { text: "DuckDB AS OF Joins", url: "https://duckdb.org/docs/sql/query_syntax/from.html" }
+            ]
         }
     ];
 
@@ -1904,7 +2307,7 @@
         if (!container) return;
 
         if (history.length === 0) {
-            container.innerHTML = '<p class="text-chalk/25 text-xs font-mono">No past attempts yet.</p>';
+            container.innerHTML = '<p class="t-text-ghost text-xs font-mono">No past attempts yet.</p>';
             return;
         }
 
@@ -1916,27 +2319,27 @@
             <div class="flex gap-4 mb-3">
                 <div class="text-center">
                     <div class="stat-number font-display text-xl">${history.length}</div>
-                    <div class="font-mono text-[8px] text-chalk/30 uppercase tracking-wider">Attempts</div>
+                    <div class="font-mono text-[8px] t-text-ghost uppercase tracking-wider">Attempts</div>
                 </div>
                 <div class="text-center">
                     <div class="stat-number font-display text-xl">${best}%</div>
-                    <div class="font-mono text-[8px] text-chalk/30 uppercase tracking-wider">Best</div>
+                    <div class="font-mono text-[8px] t-text-ghost uppercase tracking-wider">Best</div>
                 </div>
                 <div class="text-center">
                     <div class="stat-number font-display text-xl">${avg}%</div>
-                    <div class="font-mono text-[8px] text-chalk/30 uppercase tracking-wider">Average</div>
+                    <div class="font-mono text-[8px] t-text-ghost uppercase tracking-wider">Average</div>
                 </div>
             </div>
             <div class="space-y-1">
                 ${recent.map(r => `
-                    <div class="flex items-center justify-between text-xs py-1 border-b border-white/5">
-                        <span class="text-chalk/40 font-mono">${new Date(r.date).toLocaleDateString()}</span>
-                        <span class="text-chalk/50">${r.correct}/${r.total}</span>
+                    <div class="flex items-center justify-between text-xs py-1 border-b" style="border-color:var(--border-subtle)">
+                        <span class="t-text-faint font-mono">${new Date(r.date).toLocaleDateString()}</span>
+                        <span class="t-text-muted">${r.correct}/${r.total}</span>
                         <span class="font-mono font-bold ${r.pct >= 70 ? 'text-sage' : r.pct >= 50 ? 'text-gold' : 'text-ember'}">${r.pct}%</span>
                     </div>
                 `).join('')}
             </div>
-            <button id="clear-history-btn" class="mt-3 text-[10px] font-mono text-chalk/20 hover:text-ember/60 transition-colors uppercase tracking-wider">
+            <button id="clear-history-btn" class="mt-3 text-[10px] font-mono t-text-ghost hover:text-ember transition-colors uppercase tracking-wider">
                 Clear History
             </button>
         `;
@@ -1980,10 +2383,10 @@
         btn.addEventListener('click', () => {
             document.querySelectorAll('.qn-btn').forEach(b => {
                 b.classList.remove('active', 'bg-ember');
-                b.classList.add('text-chalk/60');
+                // theme handled by CSS
             });
             btn.classList.add('active', 'bg-ember');
-            btn.classList.remove('text-chalk/60');
+            // theme handled by CSS
             selectedQuizCount = parseInt(btn.dataset.n);
         });
     });
@@ -2043,20 +2446,20 @@
         document.getElementById('quiz-progress-fill').style.width = `${((ci) / totalQuestions) * 100}%`;
 
         const diffClass = q.difficulty === 'beginner' ? 'diff-beginner' : q.difficulty === 'intermediate' ? 'diff-intermediate' : 'diff-advanced';
-        const catLabel = { business: 'Business', models: 'Models', tuning: 'Tuning', appdev: 'App Dev', devsecops: 'DevSecOps' }[q.cat];
+        const catLabel = { business: 'Business', models: 'Models', tuning: 'Tuning', appdev: 'App Dev', devsecops: 'DevSecOps', data: 'Data Eng' }[q.cat];
         const letters = ['A', 'B', 'C', 'D'];
 
         area.innerHTML = `
-            <div class="bg-white/[0.02] border border-white/5 rounded-xl overflow-hidden">
+            <div class="t-surface rounded-xl overflow-hidden" style="border:1px solid var(--border)">
                 <!-- Question Header -->
-                <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between flex-wrap gap-3">
+                <div class="px-6 py-4 border-b flex items-center justify-between flex-wrap gap-3" style="border-color:var(--border-subtle)">
                     <div class="flex items-center gap-3">
-                        <span class="font-mono text-xs text-chalk/30">Q${ci + 1}</span>
+                        <span class="font-mono text-xs t-text-faint">Q${ci + 1}</span>
                         <span class="difficulty-badge font-mono ${diffClass}">${q.difficulty}</span>
-                        <span class="font-mono text-xs text-chalk/20">/ ${catLabel}</span>
+                        <span class="font-mono text-xs t-text-ghost">/ ${catLabel}</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="font-mono text-[10px] text-chalk/30 uppercase tracking-wider mr-1">Tries</span>
+                        <span class="font-mono text-[10px] t-text-faint uppercase tracking-wider mr-1">Tries</span>
                         <div class="tries-dot remaining" id="try-dot-0"></div>
                         <div class="tries-dot remaining" id="try-dot-1"></div>
                         <div class="tries-dot remaining" id="try-dot-2"></div>
@@ -2065,14 +2468,14 @@
 
                 <!-- Question Text -->
                 <div class="px-6 py-6">
-                    <h3 class="font-display text-xl md:text-2xl text-chalk/90 leading-snug mb-6">${q.question}</h3>
+                    <h3 class="font-display text-xl md:text-2xl t-text-90 leading-snug mb-6">${q.question}</h3>
 
                     <!-- Options -->
                     <div class="space-y-3" id="quiz-options">
                         ${q.options.map((opt, i) => `
                             <div class="quiz-option flex items-center gap-4 px-5 py-4 rounded-lg" data-idx="${i}" id="opt-${i}">
                                 <div class="opt-letter">${letters[i]}</div>
-                                <span class="text-chalk/80 text-[0.95rem]">${opt}</span>
+                                <span class="t-text-80 text-[0.95rem]">${opt}</span>
                             </div>
                         `).join('')}
                     </div>
@@ -2082,9 +2485,9 @@
                 <div id="quiz-feedback" class="px-6 pb-6"></div>
 
                 <!-- Navigation -->
-                <div class="px-6 py-4 border-t border-white/5 flex justify-between items-center">
-                    <span class="font-mono text-xs text-chalk/30" id="tries-remaining-text">3 tries remaining</span>
-                    <button id="quiz-next-btn" class="hidden px-6 py-2 bg-ember text-chalk rounded-lg text-sm font-semibold hover:bg-ember/90 transition-all">
+                <div class="px-6 py-4 border-t flex justify-between items-center" style="border-color:var(--border-subtle)">
+                    <span class="font-mono text-xs t-text-faint" id="tries-remaining-text">3 tries remaining</span>
+                    <button id="quiz-next-btn" class="hidden px-6 py-2 bg-ember text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-all">
                         ${ci < totalQuestions - 1 ? 'Next Question →' : 'See Results →'}
                     </button>
                 </div>
@@ -2155,7 +2558,7 @@
             feedback.innerHTML = `
                 <div class="feedback-panel ${tryNumber === 1 ? 'bg-sage/10 border border-sage/20' : 'bg-gold/10 border border-gold/20'} rounded-lg px-5 py-4">
                     <div class="flex items-center gap-2 mb-2">${statusLabel}</div>
-                    <p class="text-chalk/60 text-sm">${q.hint}</p>
+                    <p class="t-text-muted text-sm">${q.hint}</p>
                 </div>
             `;
 
@@ -2189,7 +2592,7 @@
                             <span class="text-gold text-lg">💡</span>
                             <span class="font-semibold text-gold text-sm uppercase tracking-wider">Hint — Try Again</span>
                         </div>
-                        <p class="text-chalk/70 text-sm mb-3">${q.hint}</p>
+                        <p class="t-text-muted text-sm mb-3">${q.hint}</p>
                         <div class="flex flex-wrap gap-1">${hintLinksHtml}</div>
                     </div>
                 `;
@@ -2206,9 +2609,9 @@
                             <span class="text-ember text-lg">📖</span>
                             <span class="font-semibold text-ember text-sm uppercase tracking-wider">Detailed Explanation — Last Try</span>
                         </div>
-                        <p class="text-chalk/70 text-sm mb-3">${q.detail}</p>
-                        <div class="border-t border-white/5 pt-3 mt-3">
-                            <p class="font-mono text-[10px] text-chalk/30 uppercase tracking-widest mb-2">Study Resources</p>
+                        <p class="t-text-muted text-sm mb-3">${q.detail}</p>
+                        <div class="border-t pt-3 mt-3" style="border-color:var(--border-subtle)">
+                            <p class="font-mono text-[10px] t-text-ghost uppercase tracking-widest mb-2">Study Resources</p>
                             <div class="flex flex-wrap gap-1">${detailLinksHtml}</div>
                         </div>
                     </div>
@@ -2233,10 +2636,10 @@
                                 <span class="font-semibold text-ember text-sm uppercase tracking-wider">Incorrect — Answer Revealed</span>
                             </div>
                         </div>
-                        <div class="px-5 py-4 bg-white/[0.01]">
-                            <p class="text-chalk/80 text-sm leading-relaxed mb-4">${q.answerExplanation}</p>
-                            <div class="border-t border-white/5 pt-3">
-                                <p class="font-mono text-[10px] text-chalk/30 uppercase tracking-widest mb-2">References & Further Reading</p>
+                        <div class="px-5 py-4 t-surface">
+                            <p class="t-text-80 text-sm leading-relaxed mb-4">${q.answerExplanation}</p>
+                            <div class="border-t pt-3" style="border-color:var(--border-subtle)">
+                                <p class="font-mono text-[10px] t-text-ghost uppercase tracking-widest mb-2">References & Further Reading</p>
                                 <div class="flex flex-wrap gap-1">${answerLinksHtml}</div>
                             </div>
                         </div>
@@ -2315,7 +2718,7 @@
                 <div class="flex items-start gap-3 px-4 py-3 rounded-lg border ${bg}">
                     <span class="${color} font-bold text-sm mt-0.5 w-4 text-center flex-shrink-0">${icon}</span>
                     <div class="flex-1 min-w-0">
-                        <p class="text-chalk/80 text-sm leading-snug">${q.question}</p>
+                        <p class="t-text-80 text-sm leading-snug">${q.question}</p>
                         <p class="font-mono text-xs mt-1 ${color}/70">
                             Answer: ${letters[q.correct]}. ${q.options[q.correct]} — ${statusText}
                         </p>
@@ -2335,62 +2738,62 @@
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center">
                         <span class="stat-number font-display text-3xl">${pct}%</span>
-                        <span class="font-mono text-[10px] text-chalk/40 uppercase">${correctCount}/${totalQuestions}</span>
+                        <span class="font-mono text-[10px] t-text-faint uppercase">${correctCount}/${totalQuestions}</span>
                     </div>
                 </div>
                 <div class="mb-4">
                     <span class="font-display text-4xl ${gradeColor}">Grade: ${grade}</span>
                 </div>
-                <p class="text-chalk/50 max-w-md mx-auto mb-6">${message}</p>
+                <p class="t-text-muted max-w-md mx-auto mb-6">${message}</p>
 
                 <!-- Score Breakdown -->
                 <div class="flex justify-center gap-6 mb-2">
                     <div class="text-center">
                         <div class="text-sage font-display text-2xl">${correctCount}</div>
-                        <div class="font-mono text-[9px] text-sage/60 uppercase tracking-wider">Correct<br>(1st try)</div>
+                        <div class="font-mono text-[9px] text-sage uppercase tracking-wider" style="opacity:0.6">Correct<br>(1st try)</div>
                     </div>
                     <div class="text-center">
                         <div class="text-gold font-display text-2xl">${helpedCount}</div>
-                        <div class="font-mono text-[9px] text-gold/60 uppercase tracking-wider">With Help<br>(no credit)</div>
+                        <div class="font-mono text-[9px] text-gold uppercase tracking-wider" style="opacity:0.6">With Help<br>(no credit)</div>
                     </div>
                     <div class="text-center">
                         <div class="text-ember font-display text-2xl">${wrongCount}</div>
-                        <div class="font-mono text-[9px] text-ember/60 uppercase tracking-wider">Incorrect<br>(all 3 failed)</div>
+                        <div class="font-mono text-[9px] text-ember uppercase tracking-wider" style="opacity:0.6">Incorrect<br>(all 3 failed)</div>
                     </div>
                 </div>
             </div>
 
             <!-- Question Review -->
             <div class="mb-8">
-                <h3 class="font-mono text-xs text-chalk/40 uppercase tracking-widest mb-4">Question-by-Question Review</h3>
+                <h3 class="font-mono text-xs t-text-faint uppercase tracking-widest mb-4">Question-by-Question Review</h3>
                 <div class="space-y-2">${reviewHtml}</div>
             </div>
 
             <!-- Actions -->
             <div class="text-center">
-                <button id="print-cert-btn" class="px-8 py-3 bg-gold/20 border border-gold/40 text-gold rounded-lg font-semibold hover:bg-gold/30 transition-all mr-3">
+                <button id="print-cert-btn" class="px-8 py-3 rounded-lg font-semibold transition-all mr-3" style="background:rgba(201,162,39,0.15);border:1px solid rgba(201,162,39,0.35);color:var(--gold)">
                     🖨 Print Certificate
                 </button>
-                <button id="retake-quiz-btn" class="px-8 py-3 bg-ember text-chalk rounded-lg font-semibold hover:bg-ember/90 transition-all">
+                <button id="retake-quiz-btn" class="px-8 py-3 bg-ember text-white rounded-lg font-semibold hover:opacity-90 transition-all">
                     ↻ Retake Quiz
                 </button>
-                <button id="back-to-study-btn" class="ml-3 px-8 py-3 bg-white/5 border border-white/10 text-chalk/70 rounded-lg font-semibold hover:bg-white/10 transition-all">
+                <button id="back-to-study-btn" class="ml-3 px-8 py-3 t-input rounded-lg font-semibold t-text-muted hover:opacity-80 transition-all" style="border:1px solid var(--border)">
                     ← Back to Study
                 </button>
             </div>
 
             <!-- Name Input Modal -->
             <div id="name-modal" class="hidden mt-6">
-                <div class="max-w-md mx-auto bg-white/[0.03] border border-white/10 rounded-xl p-6">
-                    <p class="font-mono text-[10px] text-gold uppercase tracking-widest mb-3">Certificate Details</p>
-                    <label class="block text-sm text-chalk/60 mb-2">Enter your full name for the certificate:</label>
+                <div class="max-w-md mx-auto t-surface-el rounded-xl p-6" style="border:1px solid var(--border)">
+                    <p class="font-mono text-[10px] uppercase tracking-widest mb-3" style="color:var(--gold)">Certificate Details</p>
+                    <label class="block text-sm t-text-muted mb-2">Enter your full name for the certificate:</label>
                     <input id="cert-name-input" type="text" placeholder="e.g. Jane Doe"
-                        class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-chalk placeholder:text-chalk/25 font-display text-xl focus:outline-none focus:border-gold mb-4">
+                        class="theme-input w-full px-4 py-3 font-display text-xl mb-4">
                     <div class="flex gap-3">
-                        <button id="confirm-print-btn" class="flex-1 px-6 py-2.5 bg-gold text-ink rounded-lg font-semibold text-sm hover:bg-gold/90 transition-all">
+                        <button id="confirm-print-btn" class="flex-1 px-6 py-2.5 rounded-lg font-semibold text-sm hover:opacity-90 transition-all" style="background:var(--gold);color:#fff">
                             Generate & Print Certificate
                         </button>
-                        <button id="cancel-print-btn" class="px-6 py-2.5 bg-white/5 border border-white/10 text-chalk/50 rounded-lg text-sm hover:bg-white/10 transition-all">
+                        <button id="cancel-print-btn" class="px-6 py-2.5 t-input t-text-muted rounded-lg text-sm hover:opacity-80 transition-all" style="border:1px solid var(--border)">
                             Cancel
                         </button>
                     </div>
@@ -2461,11 +2864,12 @@
             models: 'ML Model Development',
             tuning: 'Model Tuning & Optimization',
             appdev: 'AI Application Development',
-            devsecops: 'DevSecOps & MLOps'
+            devsecops: 'DevSecOps & MLOps',
+            data: 'Data Science & Engineering'
         };
 
         const coveredTopics = selectedCat === 'all'
-            ? ['AI Business Strategy', 'ML Model Development', 'Model Tuning & Optimization', 'AI Application Development', 'DevSecOps & MLOps']
+            ? ['AI Business Strategy', 'ML Model Development', 'Model Tuning & Optimization', 'AI Application Development', 'DevSecOps & MLOps', 'Data Science & Engineering']
             : [catLabels[selectedCat]];
 
         const topicTagsHtml = coveredTopics.map(t => `<span class="cert-topic-tag">${t}</span>`).join(' ');
@@ -2534,7 +2938,7 @@
 
                     <div class="cert-footer">
                         <div class="cert-sig-block">
-                            <div class="cert-sig-name">R. Lewis</div>
+                            <div class="cert-sig-name">Z. Thornton</div>
                             <div class="cert-sig-line">Director of AI Training</div>
                         </div>
                         <div class="cert-sig-block" style="text-align:center;">
@@ -2542,7 +2946,7 @@
                             <div class="cert-sig-line">Date of Completion</div>
                         </div>
                         <div class="cert-sig-block">
-                            <div class="cert-sig-name">Z. Lewis</div>
+                            <div class="cert-sig-name">M. Chen</div>
                             <div class="cert-sig-line">Chief Technology Officer</div>
                         </div>
                     </div>
