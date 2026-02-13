@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI & ML Interview Mastery</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwinds.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -699,8 +699,9 @@
                 <a href="#appdev" class="hover:text-ember transition-colors">App Dev</a>
                 <a href="#devsecops" class="hover:text-ember transition-colors">DevSecOps</a>
                 <a href="#data" class="hover:text-ember transition-colors">Data</a>
+                <a href="#algorithms" class="hover:text-ember transition-colors">Algorithms</a>
                 <a href="#quiz" class="hover:text-ember transition-colors font-semibold">Quiz</a>
-                <span id="counter" class="font-mono text-xs text-ember bg-ember/10 px-2 py-1 rounded">0/60</span>
+                <span id="counter" class="font-mono text-xs text-ember bg-ember/10 px-2 py-1 rounded">0/70</span>
                 <button id="theme-toggle" class="theme-toggle" title="Toggle light/dark mode" aria-label="Toggle theme">
                     <svg id="theme-icon-sun" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                     <svg id="theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -712,7 +713,7 @@
     <!-- Hero -->
     <header class="pt-32 pb-20 px-6">
         <div class="max-w-6xl mx-auto">
-            <p class="font-mono text-xs text-ember tracking-widest uppercase mb-6 fade-up fade-up-1">Comprehensive Guide — 60 Questions</p>
+            <p class="font-mono text-xs text-ember tracking-widest uppercase mb-6 fade-up fade-up-1">Comprehensive Guide — 70 Questions</p>
             <h1 class="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6 fade-up fade-up-2">
                 AI & Machine Learning<br>
                 <span class="italic t-text-faint">Interview Questions</span>
@@ -725,11 +726,11 @@
             <!-- Stats -->
             <div class="flex flex-wrap gap-8 mt-12 fade-up fade-up-4">
                 <div>
-                    <div class="stat-number font-display text-4xl">60</div>
+                    <div class="stat-number font-display text-4xl">70</div>
                     <div class="text-xs t-text-faint font-mono uppercase tracking-wider mt-1">Questions</div>
                 </div>
                 <div>
-                    <div class="stat-number font-display text-4xl">6</div>
+                    <div class="stat-number font-display text-4xl">7</div>
                     <div class="text-xs t-text-faint font-mono uppercase tracking-wider mt-1">Categories</div>
                 </div>
                 <div>
@@ -756,6 +757,7 @@
                     <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="appdev">App Dev</button>
                     <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="devsecops">DevSecOps</button>
                     <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="data">Data Eng</button>
+                    <button class="cat-pill px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider" data-cat="algorithms">Algorithms</button>
                 </div>
                 <div class="relative w-full md:w-72">
                     <input id="search-input" type="text" placeholder="Search questions…" class="theme-input w-full px-4 py-2 text-sm font-mono">
@@ -783,7 +785,7 @@
                 </h2>
                 <div class="h-[1px] bg-gradient-to-r from-gold via-ember to-transparent mb-6"></div>
                 <p class="t-text-muted max-w-xl leading-relaxed">
-                    Randomized multiple-choice questions from all 6 categories. You get <strong class="t-text-80">3 tries</strong> per question — hints unlock on failure, building to the full explanation.
+                    Randomized multiple-choice questions from all 7 categories. You get <strong class="t-text-80">3 tries</strong> per question — hints unlock on failure, building to the full explanation.
                 </p>
             </div>
 
@@ -796,7 +798,7 @@
                             <button data-n="10" class="qn-btn active px-4 py-2 rounded-lg text-sm font-mono transition-all">10</button>
                             <button data-n="20" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono transition-all">20</button>
                             <button data-n="30" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono transition-all">30</button>
-                            <button data-n="60" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono transition-all">All</button>
+                            <button data-n="70" class="qn-btn px-4 py-2 rounded-lg text-sm font-mono transition-all">All</button>
                         </div>
                     </div>
                     <div>
@@ -809,6 +811,7 @@
                             <option value="appdev">App Development</option>
                             <option value="devsecops">DevSecOps & MLOps</option>
                             <option value="data">Data Science & Engineering</option>
+                            <option value="algorithms">AI & ML Algorithms</option>
                         </select>
                     </div>
                     <button id="start-quiz-btn" class="px-8 py-2.5 bg-ember text-white rounded-lg font-semibold text-sm hover:opacity-90 transition-all pulse-glow">
@@ -1498,6 +1501,114 @@
                 { text: "Prodigy (spaCy)", url: "https://prodi.gy/" },
                 { text: "Albumentations", url: "https://albumentations.ai/" }
             ]
+        },
+
+        // ─── AI & ML ALGORITHMS (10) ─────────────────────────────────
+        {
+            id: 61, cat: "algorithms", difficulty: "beginner",
+            q: "What is Linear Regression and when should you use it?",
+            a: `Linear Regression is the foundational supervised learning algorithm that models a linear relationship between input features and a continuous target variable:<br><br><strong>How It Works:</strong> Finds the best-fit line (or hyperplane in multiple dimensions) by minimizing the sum of squared residuals (Ordinary Least Squares). The model learns weights (coefficients) for each feature: ŷ = w₁x₁ + w₂x₂ + ... + b.<br><br><strong>When to Use:</strong><br>• Predicting continuous outcomes (house prices, revenue, temperature)<br>• When you expect a roughly linear relationship between features and target<br>• When interpretability is paramount — each coefficient directly shows the effect of a unit change in that feature<br>• As a baseline model before trying more complex approaches<br>• When dataset is small and you need a stable, low-variance model<br><br><strong>Variants:</strong><br>• <em>Ridge Regression (L2):</em> Adds penalty λ∑w² to prevent overfitting. Shrinks coefficients toward zero but never to exactly zero. Good when you have many correlated features.<br>• <em>Lasso Regression (L1):</em> Adds penalty λ∑|w|. Can shrink coefficients to exactly zero — built-in feature selection. Good when you suspect only a few features matter.<br>• <em>Elastic Net:</em> Combines L1 + L2 penalties. Best of both worlds. Use when features are correlated and you want some sparsity.<br>• <em>Polynomial Regression:</em> Add x², x³, interaction terms to capture non-linear relationships while still using the linear regression framework.<br><br><strong>Assumptions:</strong> Linearity, independence of errors, homoscedasticity (constant error variance), normality of residuals. Violations don't make the model useless but may degrade confidence intervals and p-values.<br><br><strong>Limitations:</strong> Cannot capture complex non-linear patterns. Sensitive to outliers. Multicollinearity between features inflates coefficient variance.`,
+            links: [
+                { text: "scikit-learn LinearRegression", url: "https://scikit-learn.org/stable/modules/linear_model.html" },
+                { text: "StatQuest: Linear Regression", url: "https://www.youtube.com/watch?v=nk2CQITm_eo" },
+                { text: "Ridge vs Lasso Explained", url: "https://scikit-learn.org/stable/modules/linear_model.html#ridge-regression" }
+            ]
+        },
+        {
+            id: 62, cat: "algorithms", difficulty: "beginner",
+            q: "What is Logistic Regression and how does it differ from Linear Regression?",
+            a: `Despite its name, Logistic Regression is a <em>classification</em> algorithm, not a regression algorithm:<br><br><strong>How It Works:</strong> Applies a sigmoid function σ(z) = 1/(1+e⁻ᶻ) to a linear combination of features, mapping the output to a probability between 0 and 1. If P(y=1|x) > threshold (default 0.5), predict class 1. Trained by maximizing log-likelihood (minimizing log loss / binary cross-entropy).<br><br><strong>Key Difference from Linear Regression:</strong><br>• Linear Regression → continuous output (any real number)<br>• Logistic Regression → probability output (0 to 1), used for classification<br>• Linear fits a line to data; Logistic fits an S-curve (sigmoid) to find a decision boundary<br><br><strong>When to Use:</strong><br>• Binary classification (spam/not spam, churn/retain, fraud/legitimate)<br>• When you need probability estimates, not just class labels<br>• When interpretability matters — coefficients represent log-odds ratios<br>• Medical diagnosis where understanding feature contributions is critical<br>• As a strong baseline for any classification problem<br><br><strong>Variants:</strong><br>• <em>Multinomial Logistic Regression:</em> Extends to 3+ classes using softmax function<br>• <em>Regularized:</em> L1 (sparse feature selection), L2 (prevent overfitting), Elastic Net<br>• <em>One-vs-Rest (OvR):</em> Train one binary classifier per class for multi-class problems<br><br><strong>Strengths:</strong> Fast training, interpretable coefficients, outputs calibrated probabilities, works well with linearly separable data, low computational cost. <strong>Limitations:</strong> Assumes linear decision boundary (though feature engineering can help), struggles with complex non-linear patterns without manual feature creation.`,
+            links: [
+                { text: "scikit-learn LogisticRegression", url: "https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression" },
+                { text: "StatQuest: Logistic Regression", url: "https://www.youtube.com/watch?v=yIYKR4sgzI8" },
+                { text: "Andrew Ng: Classification", url: "https://www.coursera.org/learn/machine-learning" }
+            ]
+        },
+        {
+            id: 63, cat: "algorithms", difficulty: "intermediate",
+            q: "What are Decision Trees and Random Forests, and when is each appropriate?",
+            a: `Decision Trees and Random Forests are among the most widely used ML algorithms for both classification and regression:<br><br><strong>Decision Trees:</strong><br>• <em>How:</em> Recursively splits data on feature thresholds that maximize information gain (classification) or minimize variance (regression). Creates a tree of if-then rules.<br>• <em>Splitting Criteria:</em> Gini impurity or entropy (classification), MSE (regression).<br>• <em>Strengths:</em> Highly interpretable (visualize the tree), handles mixed data types, no feature scaling needed, captures non-linear relationships, handles missing values natively in some implementations.<br>• <em>Weaknesses:</em> Prone to overfitting (deep trees memorize noise), high variance (small data changes → very different trees), greedy splitting can miss global optima.<br>• <em>When to Use:</em> When interpretability is the #1 priority, for quick prototyping, rule extraction, or when stakeholders need to understand every decision.<br><br><strong>Random Forests:</strong><br>• <em>How:</em> Ensemble of hundreds of decision trees, each trained on a random bootstrap sample of the data (bagging) with a random subset of features at each split.<br>• <em>Why It Works:</em> Individual trees overfit differently → averaging their predictions cancels out noise. This is the bias-variance tradeoff in action: each tree has low bias (deep) but high variance; the ensemble has low bias AND low variance.<br>• <em>Strengths:</em> Excellent out-of-the-box performance, robust to overfitting, handles high-dimensional data, provides feature importance rankings, minimal hyperparameter tuning needed.<br>• <em>Weaknesses:</em> Less interpretable than a single tree, slower inference (must run all trees), can struggle with very sparse high-cardinality features, doesn't extrapolate well beyond training data range.<br>• <em>When to Use:</em> Tabular data baseline (often competitive with boosting), when you want a reliable model with minimal tuning, feature importance analysis, any classification/regression problem as a first serious model.<br><br><strong>Key Hyperparameters:</strong> n_estimators (100-500 trees), max_depth, min_samples_split, max_features (sqrt for classification, n/3 for regression).`,
+            links: [
+                { text: "scikit-learn RandomForest", url: "https://scikit-learn.org/stable/modules/ensemble.html#random-forests" },
+                { text: "Visual Guide to Random Forests", url: "https://mlu-explain.github.io/random-forest/" },
+                { text: "StatQuest: Random Forests", url: "https://www.youtube.com/watch?v=J4Wdy0Wc_xQ" }
+            ]
+        },
+        {
+            id: 64, cat: "algorithms", difficulty: "intermediate",
+            q: "What is Gradient Boosting (XGBoost, LightGBM, CatBoost) and why does it dominate tabular data?",
+            a: `Gradient Boosting builds an ensemble of weak learners (shallow trees) sequentially, where each tree corrects the errors of the previous ones:<br><br><strong>How It Works:</strong><br>1. Fit an initial model (e.g., predict the mean)<br>2. Compute residuals (errors) of current predictions<br>3. Fit a new shallow tree to predict those residuals<br>4. Add the new tree's predictions (scaled by learning rate) to the ensemble<br>5. Repeat for N rounds — each tree fixes what the ensemble still gets wrong<br><br><strong>Key Implementations:</strong><br>• <em>XGBoost:</em> The pioneer of modern gradient boosting. Regularized objective, second-order gradient approximation, tree pruning, built-in handling of missing values, parallelized tree building. The algorithm that won most Kaggle competitions 2015-2020.<br>• <em>LightGBM (Microsoft):</em> Faster than XGBoost via gradient-based one-side sampling (GOSS) and exclusive feature bundling (EFB). Leaf-wise tree growth (vs level-wise). Best for large datasets. 5-10x faster training.<br>• <em>CatBoost (Yandex):</em> Native handling of categorical features (no manual encoding needed), ordered boosting to reduce overfitting, symmetric trees. Often best out-of-box performance with minimal tuning.<br><br><strong>Why It Dominates Tabular Data:</strong><br>• Captures complex non-linear interactions automatically<br>• Handles mixed feature types (numeric, categorical, missing values)<br>• Built-in regularization prevents overfitting<br>• Feature importance for interpretability<br>• Deep learning typically underperforms boosting on structured tabular data (not enough data, no spatial/sequential structure to exploit)<br><br><strong>When to Use:</strong> Almost any tabular prediction task — classification, regression, ranking. Default choice for Kaggle, fraud detection, credit scoring, churn prediction, recommendation systems, pricing. <strong>When NOT to use:</strong> Image, text, audio, video data (use deep learning), very small datasets (<100 rows), when linear models suffice, or when latency constraints require simpler models.`,
+            links: [
+                { text: "XGBoost Documentation", url: "https://xgboost.readthedocs.io/" },
+                { text: "LightGBM Documentation", url: "https://lightgbm.readthedocs.io/" },
+                { text: "CatBoost Documentation", url: "https://catboost.ai/" },
+                { text: "Why Boosting Wins on Tabular Data", url: "https://arxiv.org/abs/2207.08815" }
+            ]
+        },
+        {
+            id: 65, cat: "algorithms", difficulty: "intermediate",
+            q: "What are Support Vector Machines (SVM) and when should you consider them?",
+            a: `SVMs find the optimal hyperplane that maximally separates classes in feature space:<br><br><strong>How It Works:</strong><br>• Finds the decision boundary (hyperplane) that maximizes the <em>margin</em> — the distance between the boundary and the nearest data points (support vectors) from each class.<br>• <em>Hard Margin:</em> Requires perfect separation (only works for linearly separable data).<br>• <em>Soft Margin (C-SVM):</em> Allows some misclassification controlled by parameter C. High C → narrow margin, few violations. Low C → wide margin, more violations tolerated.<br><br><strong>The Kernel Trick:</strong> The real power of SVMs — project data into higher-dimensional space where it becomes linearly separable, without explicitly computing the transformation:<br>• <em>Linear Kernel:</em> K(x,y) = x·y. Use for linearly separable data or high-dimensional sparse data (text classification).<br>• <em>RBF (Gaussian) Kernel:</em> K(x,y) = exp(-γ||x-y||²). Most versatile, captures complex non-linear boundaries. Default choice.<br>• <em>Polynomial Kernel:</em> K(x,y) = (x·y + c)ᵈ. For polynomial decision boundaries.<br><br><strong>When to Use:</strong><br>• Small-to-medium datasets (100s to 10,000s of samples) where it excels<br>• High-dimensional data (text classification with TF-IDF — SVM was king before deep learning)<br>• When margin maximization makes sense (clear separation between classes)<br>• Binary classification problems, especially with complex decision boundaries<br>• Image classification with HOG/SIFT features (pre-CNN era, still works for small datasets)<br><br><strong>When NOT to Use:</strong> Large datasets (>100K samples — training scales O(n²) to O(n³)), when probability estimates are needed (SVM outputs are not naturally calibrated), when interpretability is important (kernel SVMs are black boxes), noisy data with heavily overlapping classes.<br><br><strong>SVR (Support Vector Regression):</strong> Fits a tube of width ε around the data; only points outside the tube contribute to the loss. Good for robust regression with outlier tolerance.`,
+            links: [
+                { text: "scikit-learn SVM Guide", url: "https://scikit-learn.org/stable/modules/svm.html" },
+                { text: "Visual SVM Explanation", url: "https://mlu-explain.github.io/svm/" },
+                { text: "Stanford CS229: SVMs", url: "https://cs229.stanford.edu/notes2022fall/main_notes.pdf" }
+            ]
+        },
+        {
+            id: 66, cat: "algorithms", difficulty: "advanced",
+            q: "What are Neural Networks and Deep Learning architectures, and when is each type appropriate?",
+            a: `Neural networks are universal function approximators composed of layers of interconnected nodes (neurons):<br><br><strong>Core Architecture:</strong> Input layer → Hidden layers → Output layer. Each neuron computes: output = activation(Σ(wᵢxᵢ) + b). Trained via backpropagation + gradient descent to minimize a loss function.<br><br><strong>Key Architectures & When to Use:</strong><br><br>• <em>Feedforward (MLP):</em> Fully connected layers. Use for: tabular data (when dataset is large enough, 50K+ rows), function approximation, simple classification/regression. Often outperformed by gradient boosting on tabular data.<br><br>• <em>Convolutional Neural Networks (CNNs):</em> Convolutional + pooling layers that detect spatial patterns. Use for: image classification (ResNet, EfficientNet), object detection (YOLO, Faster R-CNN), image segmentation (U-Net), any data with spatial structure (spectrograms, satellite imagery). Key insight: parameter sharing + translation invariance.<br><br>• <em>Recurrent Neural Networks (RNNs/LSTMs/GRUs):</em> Process sequential data with memory. Use for: time series forecasting, speech recognition, music generation. LSTMs/GRUs solve the vanishing gradient problem. Largely supplanted by Transformers for NLP tasks.<br><br>• <em>Transformers:</em> Self-attention mechanism processes all tokens in parallel. Use for: NLP (BERT, GPT, T5), machine translation, text generation, and increasingly vision (ViT), audio (Whisper), and multimodal tasks. The dominant architecture since 2018.<br><br>• <em>Autoencoders / VAEs:</em> Encoder-decoder that learns compressed representations. Use for: dimensionality reduction, anomaly detection, denoising, generative modeling (VAE).<br><br>• <em>GANs (Generative Adversarial Networks):</em> Generator vs discriminator adversarial training. Use for: image generation, style transfer, data augmentation, super-resolution. Being replaced by diffusion models for many tasks.<br><br>• <em>Diffusion Models:</em> Learn to denoise data through iterative refinement. Use for: state-of-the-art image generation (Stable Diffusion, DALL-E 3), video generation, molecular design.<br><br><strong>When to Use Deep Learning vs Classical ML:</strong> Deep learning needs large datasets (10K+ for simple tasks, millions for complex ones), benefits from GPU acceleration, excels on unstructured data (images, text, audio, video). Use classical ML for tabular data, small datasets, or when interpretability is critical.`,
+            links: [
+                { text: "3Blue1Brown: Neural Networks", url: "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi" },
+                { text: "The Illustrated Transformer", url: "https://jalammar.github.io/illustrated-transformer/" },
+                { text: "Stanford CS231n (CNNs)", url: "https://cs231n.stanford.edu/" },
+                { text: "Andrej Karpathy: Neural Networks Zero to Hero", url: "https://karpathy.ai/zero-to-hero.html" }
+            ]
+        },
+        {
+            id: 67, cat: "algorithms", difficulty: "beginner",
+            q: "What are K-Nearest Neighbors (KNN) and K-Means Clustering, and how do they differ?",
+            a: `These are two fundamentally different algorithms that both use "K" and distance metrics but serve different purposes:<br><br><strong>K-Nearest Neighbors (KNN) — Supervised:</strong><br>• <em>How:</em> For a new data point, find the K closest training examples (using Euclidean, Manhattan, or other distance metrics) and predict based on majority vote (classification) or average (regression).<br>• <em>Key Properties:</em> Lazy learner (no training phase — stores all data, computes at prediction time). Non-parametric (makes no assumptions about data distribution). Instance-based.<br>• <em>When to Use:</em> Small datasets where interpretability of "similar examples" matters, recommendation systems ("users who are similar to you liked..."), imputation of missing values, anomaly detection (points far from all neighbors).<br>• <em>When NOT to Use:</em> Large datasets (prediction is slow — must compute distance to all training points), high-dimensional data (curse of dimensionality — distances become meaningless in 100+ dimensions), when features have very different scales (must normalize first).<br>• <em>Choosing K:</em> Small K (1-5) → high variance, captures noise. Large K → high bias, overly smooth. Use cross-validation. Odd K for binary classification (avoid ties).<br><br><strong>K-Means Clustering — Unsupervised:</strong><br>• <em>How:</em> Partition data into K clusters by iteratively: (1) Assign each point to nearest centroid, (2) Recompute centroids as mean of assigned points. Repeat until convergence.<br>• <em>When to Use:</em> Customer segmentation, document clustering, image compression (color quantization), feature engineering (cluster membership as new feature), anomaly detection (far from all centroids).<br>• <em>Choosing K:</em> Elbow method (plot inertia vs K, find the "elbow"), Silhouette score, domain knowledge.<br>• <em>Limitations:</em> Assumes spherical, equally-sized clusters. Sensitive to initialization (use K-Means++ for better init). Sensitive to outliers. Cannot find non-convex clusters.<br>• <em>Alternatives:</em> DBSCAN (density-based, finds arbitrary shapes, auto-detects outliers), Hierarchical clustering (dendrogram visualization), Gaussian Mixture Models (soft assignments, elliptical clusters).`,
+            links: [
+                { text: "scikit-learn KNN", url: "https://scikit-learn.org/stable/modules/neighbors.html" },
+                { text: "scikit-learn K-Means", url: "https://scikit-learn.org/stable/modules/clustering.html#k-means" },
+                { text: "Visual K-Means Explanation", url: "https://mlu-explain.github.io/k-means/" },
+                { text: "DBSCAN vs K-Means", url: "https://scikit-learn.org/stable/modules/clustering.html#dbscan" }
+            ]
+        },
+        {
+            id: 68, cat: "algorithms", difficulty: "advanced",
+            q: "What is Reinforcement Learning (RL), and what are its key algorithms and real-world applications?",
+            a: `Reinforcement Learning trains agents to make sequential decisions by maximizing cumulative rewards through trial and error:<br><br><strong>Core Framework (Markov Decision Process):</strong><br>• <em>Agent:</em> The learner/decision-maker<br>• <em>Environment:</em> The world the agent interacts with<br>• <em>State (s):</em> Current situation<br>• <em>Action (a):</em> What the agent can do<br>• <em>Reward (r):</em> Feedback signal after each action<br>• <em>Policy (π):</em> Strategy mapping states → actions (what we're trying to learn)<br>• <em>Value Function V(s):</em> Expected cumulative future reward from state s<br><br><strong>Key Algorithms:</strong><br>• <em>Q-Learning:</em> Learn a Q-table mapping (state, action) → expected reward. Off-policy, model-free. Foundation of many modern methods. Tabular — doesn't scale to large state spaces.<br>• <em>Deep Q-Networks (DQN):</em> Replace Q-table with a neural network. Breakthrough: Atari games (DeepMind, 2015). Uses experience replay + target network for stability.<br>• <em>Policy Gradient (REINFORCE):</em> Directly optimize the policy by estimating gradients from sampled trajectories. Works with continuous action spaces.<br>• <em>Actor-Critic (A2C, A3C):</em> Combine policy gradient (actor) with value estimation (critic). Reduces variance of policy gradient estimates.<br>• <em>Proximal Policy Optimization (PPO):</em> Clips policy updates to prevent destructive large steps. The workhorse of modern RL — used for ChatGPT's RLHF, robotics, game AI. Stable, reliable, easy to tune.<br>• <em>Soft Actor-Critic (SAC):</em> Off-policy, maximum entropy RL. Encourages exploration. State-of-the-art for continuous control tasks (robotics).<br><br><strong>Real-World Applications:</strong><br>• <em>RLHF:</em> Aligning LLMs with human preferences (ChatGPT, Claude)<br>• <em>Robotics:</em> Manipulation, locomotion, autonomous navigation<br>• <em>Game AI:</em> AlphaGo, AlphaStar (StarCraft), OpenAI Five (Dota 2)<br>• <em>Recommendation Systems:</em> Sequential recommendation, explore/exploit<br>• <em>Resource Optimization:</em> Data center cooling (Google), chip design, traffic signal control<br><br><strong>When to Use:</strong> Sequential decision-making problems, when environment interaction is possible (or simulatable), when reward signal is available. <strong>Challenges:</strong> Sample inefficiency (needs millions of interactions), reward design is hard, sim-to-real gap for robotics.`,
+            links: [
+                { text: "Spinning Up in Deep RL (OpenAI)", url: "https://spinningup.openai.com/" },
+                { text: "Sutton & Barto RL Textbook (Free)", url: "http://incompleteideas.net/book/the-book.html" },
+                { text: "Stable Baselines3", url: "https://stable-baselines3.readthedocs.io/" },
+                { text: "Hugging Face Deep RL Course", url: "https://huggingface.co/learn/deep-rl-course/" }
+            ]
+        },
+        {
+            id: 69, cat: "algorithms", difficulty: "intermediate",
+            q: "What are the key dimensionality reduction algorithms (PCA, t-SNE, UMAP) and when should you use each?",
+            a: `Dimensionality reduction transforms high-dimensional data into fewer dimensions while preserving important structure:<br><br><strong>PCA (Principal Component Analysis):</strong><br>• <em>How:</em> Finds orthogonal directions (principal components) of maximum variance via eigendecomposition of the covariance matrix. Projects data onto top-K components.<br>• <em>When to Use:</em> Feature reduction before modeling (remove correlated features), data compression, noise reduction, visualization (first 2-3 PCs), preprocessing for algorithms sensitive to high dimensionality. Linear method — fast, deterministic, interpretable components.<br>• <em>When NOT:</em> Data has non-linear structure that linear projection destroys.<br>• <em>Key Decision:</em> Choose K components to retain 90-95% of total variance (scree plot / explained variance ratio).<br><br><strong>t-SNE (t-Distributed Stochastic Neighbor Embedding):</strong><br>• <em>How:</em> Converts pairwise similarities to probability distributions in high and low dimensions, minimizes KL divergence between them. Uses Student's t-distribution in low-D to handle crowding.<br>• <em>When to Use:</em> Visualization ONLY (2D/3D plots to reveal cluster structure). Excellent for exploring embedding spaces, understanding class separability, identifying anomalous groups.<br>• <em>When NOT:</em> Not for preprocessing before modeling (non-parametric — can't transform new points). Distances between clusters are NOT meaningful. Different perplexity values give very different results.<br>• <em>Key Params:</em> Perplexity (5-50, controls neighborhood size), learning rate, n_iterations (at least 1000).<br><br><strong>UMAP (Uniform Manifold Approximation and Projection):</strong><br>• <em>How:</em> Constructs a topological representation of high-D data (fuzzy simplicial complex), then optimizes a low-D layout. Based on Riemannian geometry and algebraic topology.<br>• <em>When to Use:</em> Visualization (often better than t-SNE at preserving global structure), AND as a preprocessing step for modeling (unlike t-SNE, UMAP can transform new points). Faster than t-SNE on large datasets.<br>• <em>Advantages over t-SNE:</em> Preserves more global structure, faster (especially on large datasets), can be used as a general-purpose dimensionality reduction (not just visualization), supports supervised and semi-supervised modes.<br>• <em>Key Params:</em> n_neighbors (15 is good default, controls local vs global), min_dist (controls tightness of clusters).<br><br><strong>Decision Guide:</strong> Need features for modeling → PCA or UMAP. Need visualization → t-SNE or UMAP. Need speed → PCA. Need non-linear reduction → UMAP. Need deterministic results → PCA.`,
+            links: [
+                { text: "scikit-learn PCA", url: "https://scikit-learn.org/stable/modules/decomposition.html#pca" },
+                { text: "Understanding UMAP", url: "https://umap-learn.readthedocs.io/" },
+                { text: "t-SNE Interactive Explanation", url: "https://distill.pub/2016/misread-tsne/" },
+                { text: "StatQuest: PCA", url: "https://www.youtube.com/watch?v=FgakZw6K1QQ" }
+            ]
+        },
+        {
+            id: 70, cat: "algorithms", difficulty: "advanced",
+            q: "How do you choose the right algorithm for a given ML problem? What is the algorithm selection framework?",
+            a: `Algorithm selection is one of the most important skills in applied ML. Here's a systematic decision framework:<br><br><strong>Step 1 — Define the Problem Type:</strong><br>• <em>Classification (discrete labels):</em> Binary → Logistic Regression baseline, then Gradient Boosting. Multi-class → same approach. Multi-label → Binary Relevance or classifier chains.<br>• <em>Regression (continuous value):</em> Linear Regression baseline, then Gradient Boosting (XGBoost/LightGBM).<br>• <em>Clustering (no labels):</em> K-Means for spherical clusters, DBSCAN for arbitrary shapes, Hierarchical for dendrogram analysis.<br>• <em>Ranking:</em> LambdaMART (LightGBM ranker), LTR (Learn to Rank).<br>• <em>Anomaly Detection:</em> Isolation Forest, One-Class SVM, Autoencoders.<br>• <em>Sequence/Temporal:</em> LSTMs, Transformers, or Prophet/ARIMA for simpler cases.<br><br><strong>Step 2 — Consider Data Characteristics:</strong><br>• <em>Tabular data:</em> Gradient Boosting (XGBoost/LightGBM/CatBoost) almost always wins. Start here.<br>• <em>Images:</em> CNNs (ResNet, EfficientNet) or Vision Transformers (ViT). Transfer learning from ImageNet.<br>• <em>Text:</em> Transformer-based models (BERT for classification, GPT for generation). Fine-tune pre-trained models.<br>• <em>Audio:</em> Mel spectrograms + CNNs, or Whisper/Wav2Vec2 for speech.<br>• <em>Small dataset (<1K):</em> Simple models (Logistic Regression, SVM, KNN), heavy regularization, data augmentation.<br>• <em>Large dataset (>1M):</em> LightGBM (tabular), deep learning (unstructured). Scalability matters.<br><br><strong>Step 3 — Consider Constraints:</strong><br>• <em>Interpretability needed:</em> Linear/Logistic Regression, Decision Trees, SHAP on any model<br>• <em>Low latency serving:</em> Simpler models, model compression, ONNX optimization<br>• <em>Limited compute:</em> Classical ML over deep learning, smaller models<br><br><strong>Step 4 — Practical Workflow:</strong><br>1. Start with a simple baseline (Logistic Regression / Mean predictor)<br>2. Try gradient boosting (LightGBM) — often your final answer for tabular data<br>3. If deep learning is appropriate (images/text/audio), use transfer learning<br>4. Compare models on a held-out validation set with appropriate metrics<br>5. Consider ensemble of top models for marginal improvement<br><br><strong>The "No Free Lunch" Theorem:</strong> No single algorithm is best for all problems. Domain knowledge, data characteristics, and practical constraints should guide your choice, not hype.`,
+            links: [
+                { text: "scikit-learn Algorithm Cheat Sheet", url: "https://scikit-learn.org/stable/tutorial/machine_learning_map/" },
+                { text: "ML Algorithm Selection Guide", url: "https://docs.microsoft.com/en-us/azure/machine-learning/algorithm-cheat-sheet" },
+                { text: "No Free Lunch Theorem", url: "https://machinelearningmastery.com/no-free-lunch-theorem-for-machine-learning/" },
+                { text: "Kaggle State of ML Survey", url: "https://www.kaggle.com/kaggle-survey-2022" }
+            ]
         }
     ];
 
@@ -1513,7 +1624,8 @@
         tuning: '03 — Model Tuning & Optimization',
         appdev: '04 — AI in Application Development',
         devsecops: '05 — DevSecOps & MLOps',
-        data: '06 — Data Science & Data Engineering'
+        data: '06 — Data Science & Data Engineering',
+        algorithms: '07 — AI & ML Algorithms'
     };
 
     const catAnchors = {
@@ -1522,7 +1634,8 @@
         tuning: 'tuning',
         appdev: 'appdev',
         devsecops: 'devsecops',
-        data: 'data'
+        data: 'data',
+        algorithms: 'algorithms'
     };
 
     function renderQuestions(filter = 'all', search = '') {
@@ -2276,6 +2389,107 @@
                 { text: "Chip Huyen: Data Leakage", url: "https://huyenchip.com/machine-learning-systems-design/toc.html" },
                 { text: "DuckDB AS OF Joins", url: "https://duckdb.org/docs/sql/query_syntax/from.html" }
             ]
+        },
+        // ─── AI & ML ALGORITHMS (5) ───
+        {
+            cat: "algorithms", difficulty: "beginner",
+            question: "Which algorithm is almost universally the best starting point for tabular/structured data prediction tasks?",
+            options: ["K-Nearest Neighbors", "Convolutional Neural Networks", "Gradient Boosting (XGBoost/LightGBM)", "Linear Regression"],
+            correct: 2,
+            hint: "This family of algorithms builds sequential ensembles of shallow decision trees, each correcting the previous tree's errors.",
+            hintLinks: [{ text: "XGBoost Documentation", url: "https://xgboost.readthedocs.io/" }],
+            detail: "Gradient boosting consistently outperforms other algorithms on structured/tabular data across Kaggle competitions, industry benchmarks, and academic studies. Unlike deep learning (which excels on images/text/audio), gradient boosting exploits the inherent structure of tabular data — mixed types, feature interactions, and missing values — without requiring massive datasets.",
+            detailLinks: [
+                { text: "LightGBM Documentation", url: "https://lightgbm.readthedocs.io/" },
+                { text: "CatBoost Documentation", url: "https://catboost.ai/" }
+            ],
+            answerExplanation: "The answer is <strong>Gradient Boosting (XGBoost/LightGBM)</strong>. Multiple papers and the Kaggle competition track record confirm that gradient boosting dominates tabular data tasks. A 2022 paper 'Why do tree-based models still outperform deep learning on tabular data?' (Grinsztajn et al.) demonstrated this rigorously. KNN is too slow for large data and suffers from the curse of dimensionality. CNNs are designed for spatial data (images) and don't exploit tabular structure. Linear Regression is a good baseline but can't capture non-linear interactions. The practical workflow: (1) Logistic/Linear Regression baseline, (2) LightGBM/XGBoost, (3) tune hyperparameters. For most tabular problems, step 2 is your final production model.",
+            answerLinks: [
+                { text: "Why Trees Beat Deep Learning on Tabular Data", url: "https://arxiv.org/abs/2207.08815" },
+                { text: "scikit-learn Algorithm Map", url: "https://scikit-learn.org/stable/tutorial/machine_learning_map/" },
+                { text: "XGBoost GitHub", url: "https://github.com/dmlc/xgboost" },
+                { text: "Kaggle ML Competitions", url: "https://www.kaggle.com/competitions" }
+            ]
+        },
+        {
+            cat: "algorithms", difficulty: "intermediate",
+            question: "What is the key difference between Random Forest (bagging) and Gradient Boosting (boosting)?",
+            options: ["Random Forest uses neural networks; Boosting uses decision trees", "Random Forest builds trees in parallel independently; Boosting builds trees sequentially where each corrects the previous", "Boosting can only do classification; Random Forest can do both", "They are the same algorithm with different names"],
+            correct: 1,
+            hint: "One method builds trees independently and averages them (reduce variance). The other builds trees one at a time, each focusing on the mistakes of the ensemble so far (reduce bias).",
+            hintLinks: [{ text: "scikit-learn Ensemble Methods", url: "https://scikit-learn.org/stable/modules/ensemble.html" }],
+            detail: "Bagging (Bootstrap Aggregating) trains many independent models on random subsets and averages predictions — reducing variance. Boosting trains models sequentially where each new model focuses on the errors of the current ensemble — reducing bias. Both use decision trees as base learners, but the training strategy is fundamentally different.",
+            detailLinks: [
+                { text: "Visual Guide to Random Forests", url: "https://mlu-explain.github.io/random-forest/" },
+                { text: "StatQuest: AdaBoost", url: "https://www.youtube.com/watch?v=LsK-xG1cLYA" }
+            ],
+            answerExplanation: "The answer is <strong>Random Forest builds trees in parallel independently; Boosting builds trees sequentially where each corrects the previous</strong>. Random Forest (bagging): Train N trees independently on bootstrap samples with random feature subsets → average predictions. Each tree is deep (low bias, high variance) → averaging reduces variance. Gradient Boosting (boosting): Train trees one at a time. Tree 1 makes predictions → compute residuals (errors) → Tree 2 learns to predict residuals → add Tree 2's predictions to ensemble → compute new residuals → Tree 3 learns those → repeat. Each tree is shallow (high bias, low variance) → sequential correction reduces bias. Both can do classification AND regression. Both use decision trees. The training paradigm is the key difference.",
+            answerLinks: [
+                { text: "Bagging vs Boosting Explained", url: "https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205" },
+                { text: "scikit-learn GradientBoosting", url: "https://scikit-learn.org/stable/modules/ensemble.html#gradient-tree-boosting" },
+                { text: "XGBoost Tutorial", url: "https://xgboost.readthedocs.io/en/latest/tutorials/model.html" },
+                { text: "StatQuest: Gradient Boost", url: "https://www.youtube.com/watch?v=3CC4N4z3GJc" }
+            ]
+        },
+        {
+            cat: "algorithms", difficulty: "beginner",
+            question: "Which algorithm type should you use when you have image data (photos, medical scans, satellite imagery)?",
+            options: ["Logistic Regression", "K-Means Clustering", "Convolutional Neural Networks (CNNs)", "Linear SVM"],
+            correct: 2,
+            hint: "This architecture uses learnable filters (kernels) that slide across the image to detect spatial patterns like edges, textures, and shapes.",
+            hintLinks: [{ text: "Stanford CS231n: CNNs", url: "https://cs231n.stanford.edu/" }],
+            detail: "CNNs are specifically designed for data with spatial structure. Convolutional layers apply small learnable filters across the input, detecting local patterns regardless of their position (translation invariance). Deeper layers combine simple patterns into complex features: edges → textures → parts → objects. Transfer learning from ImageNet-pretrained models (ResNet, EfficientNet) makes CNNs effective even with small datasets.",
+            detailLinks: [
+                { text: "PyTorch Vision Models", url: "https://pytorch.org/vision/stable/models.html" },
+                { text: "Hugging Face Image Classification", url: "https://huggingface.co/tasks/image-classification" }
+            ],
+            answerExplanation: "The answer is <strong>Convolutional Neural Networks (CNNs)</strong>. Logistic Regression treats each pixel as an independent feature — it cannot capture spatial relationships (an eye next to a nose = a face). K-Means is unsupervised clustering, not image classification. Linear SVM can work on hand-crafted features (HOG/SIFT) but can't learn features from raw pixels effectively. CNNs learn hierarchical spatial features automatically: (1) Early layers detect edges and corners, (2) Middle layers detect textures and parts, (3) Deep layers detect complex objects. Modern approaches: use a pre-trained model (ResNet-50, EfficientNet-B0, ViT) and fine-tune on your data. With transfer learning, even 100-1000 images can give good results. Vision Transformers (ViT) are increasingly competitive with CNNs, especially for larger datasets.",
+            answerLinks: [
+                { text: "3Blue1Brown: CNNs", url: "https://www.youtube.com/watch?v=KuXjwB4LzSA" },
+                { text: "Transfer Learning Guide", url: "https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" },
+                { text: "EfficientNet Paper", url: "https://arxiv.org/abs/1905.11946" },
+                { text: "Vision Transformer (ViT)", url: "https://arxiv.org/abs/2010.11929" }
+            ]
+        },
+        {
+            cat: "algorithms", difficulty: "advanced",
+            question: "In Reinforcement Learning, what algorithm was used to align large language models (like ChatGPT) with human preferences?",
+            options: ["K-Means Clustering", "Principal Component Analysis (PCA)", "Proximal Policy Optimization (PPO) via RLHF", "Random Forest Classifier"],
+            correct: 2,
+            hint: "This process involves training a reward model from human preference data, then optimizing the LLM's policy using a specific RL algorithm known for stable, clipped policy updates.",
+            hintLinks: [{ text: "OpenAI: RLHF", url: "https://openai.com/research/learning-from-human-feedback" }],
+            detail: "RLHF (Reinforcement Learning from Human Feedback) fine-tunes LLMs to follow instructions and be helpful/harmless. The process: (1) Supervised fine-tuning on demonstrations, (2) Train a reward model from human comparisons ('which response is better?'), (3) Optimize the LLM policy using PPO to maximize the reward model's score while staying close to the original model (KL penalty). PPO's clipped objective prevents destructive large updates.",
+            detailLinks: [
+                { text: "Anthropic: Constitutional AI", url: "https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback" },
+                { text: "Hugging Face RLHF Blog", url: "https://huggingface.co/blog/rlhf" }
+            ],
+            answerExplanation: "The answer is <strong>Proximal Policy Optimization (PPO) via RLHF</strong>. K-Means is unsupervised clustering — irrelevant to LLM alignment. PCA is dimensionality reduction. Random Forest is for tabular classification/regression. RLHF with PPO works as follows: (1) <em>Supervised Fine-Tuning (SFT):</em> Train LLM on high-quality demonstrations. (2) <em>Reward Model:</em> Humans rank multiple LLM outputs for the same prompt. Train a model to predict human preferences. (3) <em>PPO Optimization:</em> Treat the LLM as an RL agent. State = prompt, Action = generated token, Reward = reward model score. PPO updates the LLM policy to maximize rewards with a clipped objective that prevents the model from changing too drastically in one step. A KL divergence penalty keeps the model close to the SFT baseline. Alternatives emerging: DPO (Direct Preference Optimization) skips the reward model entirely, GRPO (Group Relative Policy Optimization from DeepSeek).",
+            answerLinks: [
+                { text: "InstructGPT Paper (RLHF)", url: "https://arxiv.org/abs/2203.02155" },
+                { text: "DPO Paper", url: "https://arxiv.org/abs/2305.18290" },
+                { text: "Spinning Up: PPO", url: "https://spinningup.openai.com/en/latest/algorithms/ppo.html" },
+                { text: "Sutton & Barto RL Textbook", url: "http://incompleteideas.net/book/the-book.html" }
+            ]
+        },
+        {
+            cat: "algorithms", difficulty: "intermediate",
+            question: "When choosing a dimensionality reduction technique, which method preserves global structure, can transform new data points, and is faster than t-SNE?",
+            options: ["PCA (Principal Component Analysis)", "t-SNE", "UMAP", "K-Means"],
+            correct: 2,
+            hint: "This technique, based on topological data analysis, produces embeddings that maintain both local and global relationships and supports out-of-sample transformation.",
+            hintLinks: [{ text: "UMAP Documentation", url: "https://umap-learn.readthedocs.io/" }],
+            detail: "UMAP (Uniform Manifold Approximation and Projection) constructs a topological representation of high-dimensional data and optimizes a low-dimensional layout. Unlike t-SNE, it preserves more global structure (distances between clusters are more meaningful), runs significantly faster on large datasets, and can transform new unseen data points — making it usable as a preprocessing step for ML models, not just visualization.",
+            detailLinks: [
+                { text: "t-SNE Pitfalls", url: "https://distill.pub/2016/misread-tsne/" },
+                { text: "scikit-learn PCA", url: "https://scikit-learn.org/stable/modules/decomposition.html#pca" }
+            ],
+            answerExplanation: "The answer is <strong>UMAP</strong>. PCA is fast and transforms new points, but it's <em>linear</em> — it cannot capture non-linear manifold structure, and its global structure preservation is limited to linear projections. t-SNE is great for visualization but: (1) doesn't preserve global structure well (inter-cluster distances are unreliable), (2) cannot transform new points (non-parametric), (3) is slow on large datasets (O(n²) or O(n log n) with Barnes-Hut). K-Means is a clustering algorithm, not dimensionality reduction. UMAP combines the best properties: non-linear reduction (captures manifold structure), preserves both local AND global structure, has a <code>.transform()</code> method for new data, and scales well to millions of points. It's become the go-to for both visualization and as a feature engineering step before modeling.",
+            answerLinks: [
+                { text: "UMAP Paper", url: "https://arxiv.org/abs/1802.03426" },
+                { text: "UMAP vs t-SNE Comparison", url: "https://pair-code.github.io/understanding-umap/" },
+                { text: "UMAP GitHub", url: "https://github.com/lmcinnes/umap" },
+                { text: "StatQuest: UMAP", url: "https://www.youtube.com/watch?v=eN0wFzBA4Sc" }
+            ]
         }
     ];
 
@@ -2446,7 +2660,7 @@
         document.getElementById('quiz-progress-fill').style.width = `${((ci) / totalQuestions) * 100}%`;
 
         const diffClass = q.difficulty === 'beginner' ? 'diff-beginner' : q.difficulty === 'intermediate' ? 'diff-intermediate' : 'diff-advanced';
-        const catLabel = { business: 'Business', models: 'Models', tuning: 'Tuning', appdev: 'App Dev', devsecops: 'DevSecOps', data: 'Data Eng' }[q.cat];
+        const catLabel = { business: 'Business', models: 'Models', tuning: 'Tuning', appdev: 'App Dev', devsecops: 'DevSecOps', data: 'Data Eng', algorithms: 'Algorithms' }[q.cat];
         const letters = ['A', 'B', 'C', 'D'];
 
         area.innerHTML = `
@@ -2865,11 +3079,12 @@
             tuning: 'Model Tuning & Optimization',
             appdev: 'AI Application Development',
             devsecops: 'DevSecOps & MLOps',
-            data: 'Data Science & Engineering'
+            data: 'Data Science & Engineering',
+            algorithms: 'AI & ML Algorithms'
         };
 
         const coveredTopics = selectedCat === 'all'
-            ? ['AI Business Strategy', 'ML Model Development', 'Model Tuning & Optimization', 'AI Application Development', 'DevSecOps & MLOps', 'Data Science & Engineering']
+            ? ['AI Business Strategy', 'ML Model Development', 'Model Tuning & Optimization', 'AI Application Development', 'DevSecOps & MLOps', 'Data Science & Engineering', 'AI & ML Algorithms']
             : [catLabels[selectedCat]];
 
         const topicTagsHtml = coveredTopics.map(t => `<span class="cert-topic-tag">${t}</span>`).join(' ');
